@@ -1,0 +1,62 @@
+{
+    "name": "Regulations.gov",
+    "description": "<p>Regulations.gov is a multi-agency website where citizens can view and comment on federal regulations and other agency actions that affect their daily lives. More than 35 federal departments and agencies participate in Regulations.gov, which is designed to encourage public involvement and citizen input.<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/regulations-gov-logo.png",
+    "tags": [
+        "general data",
+        "have api",
+        "pedestal",
+        "streams"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/regulations-gov\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Regulations.gov",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/regulations-gov-logo.png",
+            "humanURL": "https:\/\/www.regulations.gov\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/regulations-gov.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/regulations-gov-openapi.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/regulations-gov-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Blog",
+            "url": "https:\/\/regulationsgov.github.io\/developers\/blog\/"
+        },
+        {
+            "type": "Developers",
+            "url": "https:\/\/regulationsgov.github.io\/developers\/"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/regulationsgov"
+        },
+        {
+            "type": "Terms of Service",
+            "url": "https:\/\/regulationsgov.github.io\/developers\/terms\/"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/www.regulations.gov\/"
+        }
+    ]
+}
