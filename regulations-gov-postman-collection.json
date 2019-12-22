@@ -1,5 +1,5 @@
 {
-    "id": "a34ef630a61d68b6f9222230bebded6f",
+    "id": "783eb79034cc2dadec99a90a83781d96",
     "name": "Regulations.gov",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "8215c170da70746908edfaa38ecb3506",
+            "id": "b2fd2e2e360c3e28165844616d6930c5",
             "name": "Returns Docket information",
             "url": "httpsapi.data.gov\/regulations\/v3\/docket.{response_format}",
             "description": "Returns Docket information",
@@ -44,11 +44,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "a34ef630a61d68b6f9222230bebded6f",
+            "collectionId": "783eb79034cc2dadec99a90a83781d96",
             "rawModeData": ""
         },
         {
-            "id": "4e40ca9829fecefe2887ba8adb1647af",
+            "id": "afaedf6a2d4d9f70fb47725b2d4b5b80",
             "name": "Returns Document information",
             "url": "httpsapi.data.gov\/regulations\/v3\/document.{response_format}",
             "description": "Returns Document information",
@@ -89,11 +89,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "a34ef630a61d68b6f9222230bebded6f",
+            "collectionId": "783eb79034cc2dadec99a90a83781d96",
             "rawModeData": ""
         },
         {
-            "id": "08a058f12ad42fdb9316e98bcc9d8ee9",
+            "id": "7781cda406a90a5a7a39c932d8a88ff8",
             "name": "Search for Documents",
             "url": "httpsapi.data.gov\/regulations\/v3\/documents.{response_format}",
             "description": "This API allows users to build a query based on any of the parameters below.  If you have trouble building queries, you may wish to try them through the Advanced Search page on the Regulations.gov website.",
@@ -281,7 +281,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "a34ef630a61d68b6f9222230bebded6f",
+            "collectionId": "783eb79034cc2dadec99a90a83781d96",
             "rawModeData": ""
         }
     ]
