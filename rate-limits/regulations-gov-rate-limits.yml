@@ -1,0 +1,45 @@
+name: Regulations.gov API Rate Limits
+description: Rate limits for the Regulations.gov API are enforced through api.data.gov infrastructure using rolling hourly windows.
+keyTypes:
+  - name: DEMO_KEY
+    description: Shared IP-based key for demonstration purposes, no registration required.
+    limits:
+      - type: hourly
+        requests: 30
+        scope: per IP address
+      - type: daily
+        requests: 50
+        scope: per IP address
+    notes: Intended only for initial API exploration. Not suitable for production applications.
+  - name: Registered API Key
+    description: Free personal API key obtained via api.data.gov registration.
+    limits:
+      - type: hourly
+        requests: 1000
+        scope: per key
+    commentingApiLimits:
+      - type: per-minute
+        requests: 50
+        scope: per key
+      - type: hourly
+        requests: 500
+        scope: per key
+    notes: Commenting API (POST /v4/comments) has a stricter secondary rate limit of 50 requests/minute and 500 requests/hour.
+enforcement:
+  mechanism: Rolling hourly window (not fixed calendar hour)
+  statusCode: 429
+  statusMessage: Too Many Requests
+  responseHeaders:
+    - name: X-RateLimit-Limit
+      description: Total number of requests allowed in the current window
+    - name: X-RateLimit-Remaining
+      description: Number of requests remaining in the current window
+  resetBehavior: Automatic unblocking after the rolling one-hour window expires
+rateLimitIncreases:
+  available: true
+  process: Contact the agency or eRulemaking@gsa.gov with a justified business need; requests are reviewed case-by-case.
+  reference: https://api.data.gov/docs/rate-limits/
+references:
+  - https://open.gsa.gov/api/regulationsgov/
+  - https://api.data.gov/docs/rate-limits/
+  - https://api.data.gov/docs/developer-manual/

@@ -1,0 +1,61 @@
+aid: regulations-gov
+name: Regulations.gov
+description: Regulations.gov is the US federal government's central portal for public participation in the rulemaking process, operated by the General Services Administration. Its REST API enables programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies. Developers can search and filter content across all federal agencies, retrieve full document and comment details with attachments, and submit public comments programmatically. The API is managed through api.data.gov and uses API key authentication.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/regulations-gov/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+type: Index
+tags:
+  - Government
+  - Federal Rulemaking
+  - Public Comments
+  - Regulatory
+  - Dockets
+  - GSA
+  - Open Data
+apis:
+  - aid: regulations-gov:regulations-gov-api
+    name: Regulations.gov API
+    description: REST API providing access to federal regulatory dockets, documents, and public comments across all federal agencies. Supports full-text search, filtering by agency and date range, pagination, and comment submission.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://open.gsa.gov/api/regulationsgov/
+    baseURL: https://api.regulations.gov
+    tags:
+      - Government
+      - Federal Rulemaking
+      - Public Comments
+      - Dockets
+      - Documents
+    properties:
+      - type: Documentation
+        url: https://open.gsa.gov/api/regulationsgov/
+      - type: OpenAPI
+        url: https://api.regulations.gov/v4/openapi.yaml
+    contact:
+      - FN: Regulations.gov Support
+        url: https://www.regulations.gov/support
+        email: eRulemaking@gsa.gov
+common:
+  - type: Website
+    url: https://www.regulations.gov/
+  - type: Documentation
+    url: https://open.gsa.gov/api/regulationsgov/
+  - type: GitHubOrg
+    url: https://github.com/GSA
+  - type: Blog
+    url: https://www.gsa.gov/blog
+  - type: Pricing
+    url: https://api.data.gov/docs/rate-limits/
+  - type: Plans
+    url: plans/regulations-gov-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/regulations-gov-rate-limits.yml
+  - type: FinOps
+    url: finops/regulations-gov-finops.yml
+  - type: Support
+    url: https://www.regulations.gov/support
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

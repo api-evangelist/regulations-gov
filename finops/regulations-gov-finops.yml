@@ -1,0 +1,40 @@
+name: Regulations.gov API FinOps
+description: Financial operations guidance for Regulations.gov API usage. The API is entirely free; cost management focuses on operational efficiency, rate limit management, and avoiding unnecessary requests.
+costModel:
+  type: free
+  price: 0
+  currency: USD
+  notes: Regulations.gov API is a US government service funded by GSA. There are no usage fees, subscription costs, or paid tiers.
+costDrivers:
+  - name: No direct API costs
+    description: All API calls are free regardless of volume (subject to rate limits).
+    mitigation: N/A
+  - name: Infrastructure costs (consumer side)
+    description: Consumers may incur compute and storage costs for data processing pipelines.
+    mitigation: Use pagination efficiently (up to 250 items per page) and cache responses where possible to reduce redundant requests.
+  - name: Rate limit overages
+    description: Exceeding rate limits results in 429 errors and temporary blocks, not financial charges.
+    mitigation: Implement exponential backoff, monitor X-RateLimit-Remaining headers, and request a rate limit increase if needed.
+budgetGuidance:
+  - item: API access
+    cost: $0
+    notes: Free for all registered users.
+  - item: API key registration
+    cost: $0
+    notes: Register at https://api.data.gov/signup/ at no charge.
+  - item: Rate limit increase
+    cost: $0
+    notes: Available upon request via eRulemaking@gsa.gov; no fee applies.
+optimization:
+  - Use bulk pagination (page[size]=250) to minimize total request count.
+  - Cache docket and document metadata where data freshness allows.
+  - Use filters (agency, date range, document type) to reduce unnecessary broad searches.
+  - Monitor X-RateLimit-Remaining headers to pace requests proactively.
+  - For high-volume archiving, request a rate limit increase before starting bulk operations.
+contacts:
+  - role: API Support
+    email: eRulemaking@gsa.gov
+    url: https://www.regulations.gov/support
+references:
+  - https://open.gsa.gov/api/regulationsgov/
+  - https://api.data.gov/docs/rate-limits/

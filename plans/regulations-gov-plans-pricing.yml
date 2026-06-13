@@ -1,0 +1,42 @@
+name: Regulations.gov API Plans & Pricing
+description: Regulations.gov API is a free government API managed by GSA and operated through api.data.gov. There are no paid tiers — all access requires a free API key registration.
+plans:
+  - name: DEMO_KEY
+    description: A shared demonstration key for initial exploration of the API, available without registration. Subject to strict IP-based rate limits.
+    price: 0
+    currency: USD
+    rateLimit:
+      requests: 30
+      period: hour
+      secondary:
+        requests: 50
+        period: day
+    features:
+      - Read-only access to documents, dockets, and comments endpoints
+      - No registration required
+      - Suitable for initial exploration only
+      - Not for production use
+  - name: Registered API Key
+    description: Free API key obtained by registering at api.data.gov. Required for production use and for submitting comments via the POST API.
+    price: 0
+    currency: USD
+    rateLimit:
+      requests: 1000
+      period: hour
+    commentingApiLimit:
+      requests: 50
+      period: minute
+      secondary:
+        requests: 500
+        period: hour
+    features:
+      - Full read access to documents, dockets, and comments
+      - POST comment submission (when enabled)
+      - Higher rate limits than DEMO_KEY
+      - Rate limit increases available upon request with justification
+    registration: https://api.data.gov/signup/
+notes:
+  - The API is free for all users; no paid commercial tiers exist.
+  - Rate limit increase requests are reviewed case-by-case by GSA; contact eRulemaking@gsa.gov.
+  - The POST/commenting API availability may be subject to policy changes by GSA.
+contact: eRulemaking@gsa.gov
