@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regulations-gov/main/json-schema/document.json",
+  "title": "Document",
+  "description": "A federal regulatory document such as a Notice, Rule, Proposed Rule, or Supporting Material as returned by the Regulations.gov API.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The JSON:API resource ID (documentId)"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["documents"],
+      "description": "The JSON:API resource type"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "agencyId": {
+          "type": "string",
+          "description": "The acronym used to abbreviate the name of the agency associated with the document."
+        },
+        "commentEndDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "The date that closes the period when public comments may be submitted on the document."
+        },
+        "commentStartDate": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "The date that begins the period when public comments may be submitted on the document."
+        },
+        "docketId": {
+          "type": "string",
+          "description": "The ID of the docket to which the document corresponds."
+        },
+        "documentType": {
+          "type": "string",
+          "enum": ["Notice", "Rule", "Proposed Rule", "Supporting & Related Material", "Other"],
+          "description": "The type of regulatory document."
+        },
+        "frDocNum": {
+          "type": "string",
+          "description": "The federal register document number of the document."
+        },
+        "highlightedContent": {
+          "type": ["string", "null"],
+          "description": "Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm."
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date document was last modified in the system."
+        },
+        "objectId": {
+          "type": "string",
+          "description": "The internal ID of the document in our system."
+        },
+        "openForComment": {
+          "type": "boolean",
+          "description": "Conveys if the document is open for comment."
+        },
+        "postedDate": {
+          "type": "string",
+          "description": "The date that the document was posted by the agency to the system."
+        },
+        "subtype": {
+          "type": ["string", "null"],
+          "description": "An agency-specific attribute to further categorize a document beyond the documentType."
+        },
+        "title": {
+          "type": "string",
+          "description": "The formal title of the document."
+        },
+        "withdrawn": {
+          "type": "boolean",
+          "description": "Conveys if the document is withdrawn."
+        }
+      },
+      "required": ["agencyId", "title", "documentType"]
+    }
+  },
+  "required": ["id", "type", "attributes"]
+}

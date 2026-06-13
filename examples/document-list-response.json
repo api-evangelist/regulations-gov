@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+      "id": "EPA-HQ-OAR-2021-0257-0001",
+      "type": "documents",
+      "attributes": {
+        "agencyId": "EPA",
+        "commentEndDate": "2021-09-07T03:59:59Z",
+        "commentStartDate": "2021-07-08T04:00:00Z",
+        "docketId": "EPA-HQ-OAR-2021-0257",
+        "documentType": "Proposed Rule",
+        "frDocNum": "2021-14337",
+        "highlightedContent": null,
+        "lastModifiedDate": "2022-06-30T21:08:09Z",
+        "objectId": "09000064812e02a6",
+        "openForComment": false,
+        "postedDate": "2021-07-08T04:00:00Z",
+        "subtype": null,
+        "title": "Control of Air Pollution From New Motor Vehicles: Heavy-Duty Engine and Vehicle Standards",
+        "withdrawn": false
+      },
+      "links": {
+        "self": "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2021-0257-0001"
+      }
+    },
+    {
+      "id": "EPA-HQ-OAR-2021-0257-0002",
+      "type": "documents",
+      "attributes": {
+        "agencyId": "EPA",
+        "commentEndDate": null,
+        "commentStartDate": null,
+        "docketId": "EPA-HQ-OAR-2021-0257",
+        "documentType": "Supporting & Related Material",
+        "frDocNum": null,
+        "highlightedContent": null,
+        "lastModifiedDate": "2021-07-08T14:00:00Z",
+        "objectId": "09000064812e02a7",
+        "openForComment": false,
+        "postedDate": "2021-07-08T04:00:00Z",
+        "subtype": "Technical Report",
+        "title": "EPA Staff Technical Report: Feasibility and Cost Analysis",
+        "withdrawn": false
+      },
+      "links": {
+        "self": "https://api.regulations.gov/v4/documents/EPA-HQ-OAR-2021-0257-0002"
+      }
+    }
+  ],
+  "meta": {
+    "hasNextPage": true,
+    "hasPreviousPage": false,
+    "numberOfElements": 2,
+    "pageNumber": 1,
+    "pageSize": 25,
+    "totalElements": 312,
+    "totalPages": 13,
+    "firstPage": true,
+    "lastPage": false
+  }
+}

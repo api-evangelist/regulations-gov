@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/regulations-gov/main/json-schema/docket.json",
+  "title": "Docket",
+  "description": "A regulatory docket grouping related federal regulatory documents on Regulations.gov.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The JSON:API resource ID (docketId)"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["dockets"],
+      "description": "The JSON:API resource type"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "agencyId": {
+          "type": "string",
+          "description": "The acronym used to abbreviate the name of the agency associated with the docket."
+        },
+        "docketType": {
+          "type": "string",
+          "enum": ["Rulemaking", "Nonrulemaking"],
+          "description": "The type of docket."
+        },
+        "highlightedContent": {
+          "type": ["string", "null"],
+          "description": "Content highlighted by search engine for the searchTerm."
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date docket was last modified in the system."
+        },
+        "objectId": {
+          "type": "string",
+          "description": "The internal ID of the docket in our system."
+        },
+        "title": {
+          "type": "string",
+          "description": "The formal title of the docket."
+        },
+        "dkAbstract": {
+          "type": "string",
+          "description": "The detailed description of the docket."
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date the docket is put into effect."
+        },
+        "keywords": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "string"
+          },
+          "description": "Agency selected keywords associated with a docket."
+        },
+        "rin": {
+          "type": ["string", "null"],
+          "description": "OMB issued Regulation Identifier Number (RIN) uniquely identifies a docket and its documents."
+        },
+        "program": {
+          "type": ["string", "null"],
+          "description": "The agency specific program associated with the docket."
+        },
+        "shortTitle": {
+          "type": ["string", "null"],
+          "description": "A combination of letters and or numbers assigned to an agency's regulatory action for purposes of brevity."
+        },
+        "modifyDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date when the docket was last modified."
+        },
+        "organization": {
+          "type": ["string", "null"],
+          "description": "Identifies docket's (a regulatory action) originating agency and/or department."
+        }
+      },
+      "required": ["agencyId", "title", "docketType"]
+    }
+  },
+  "required": ["id", "type", "attributes"]
+}

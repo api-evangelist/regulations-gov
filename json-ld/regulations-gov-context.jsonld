@@ -1,0 +1,431 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "gov": "https://www.regulations.gov/vocab#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+
+    "Docket": "gov:Docket",
+    "Document": "gov:Document",
+    "Comment": "gov:Comment",
+    "Attachment": "gov:Attachment",
+
+    "docketId": {
+      "@id": "gov:docketId",
+      "@type": "xsd:string"
+    },
+    "documentId": {
+      "@id": "gov:documentId",
+      "@type": "xsd:string"
+    },
+    "commentId": {
+      "@id": "gov:commentId",
+      "@type": "xsd:string"
+    },
+    "objectId": {
+      "@id": "gov:objectId",
+      "@type": "xsd:string"
+    },
+    "trackingNbr": {
+      "@id": "gov:trackingNbr",
+      "@type": "xsd:string"
+    },
+    "agencyId": {
+      "@id": "gov:agencyId",
+      "@type": "xsd:string"
+    },
+    "rin": {
+      "@id": "gov:rin",
+      "@type": "xsd:string"
+    },
+    "frDocNum": {
+      "@id": "gov:frDocNum",
+      "@type": "xsd:string"
+    },
+    "frVolNum": {
+      "@id": "gov:frVolNum",
+      "@type": "xsd:string"
+    },
+    "cfrPart": {
+      "@id": "gov:cfrPart",
+      "@type": "xsd:string"
+    },
+    "ombApproval": {
+      "@id": "gov:ombApproval",
+      "@type": "xsd:string"
+    },
+    "legacyId": {
+      "@id": "gov:legacyId",
+      "@type": "xsd:string"
+    },
+
+    "title": {
+      "@id": "dcterms:title",
+      "@type": "xsd:string"
+    },
+    "shortTitle": {
+      "@id": "gov:shortTitle",
+      "@type": "xsd:string"
+    },
+    "dkAbstract": {
+      "@id": "dcterms:abstract",
+      "@type": "xsd:string"
+    },
+    "docAbstract": {
+      "@id": "dcterms:abstract",
+      "@type": "xsd:string"
+    },
+    "comment": {
+      "@id": "schema:text",
+      "@type": "xsd:string"
+    },
+    "subject": {
+      "@id": "dcterms:subject",
+      "@type": "xsd:string"
+    },
+    "keywords": {
+      "@id": "schema:keywords",
+      "@type": "xsd:string",
+      "@container": "@set"
+    },
+    "topics": {
+      "@id": "schema:about",
+      "@type": "xsd:string",
+      "@container": "@set"
+    },
+
+    "documentType": {
+      "@id": "gov:documentType",
+      "@type": "xsd:string"
+    },
+    "docketType": {
+      "@id": "gov:docketType",
+      "@type": "xsd:string"
+    },
+    "submitterType": {
+      "@id": "gov:submitterType",
+      "@type": "xsd:string"
+    },
+    "subtype": {
+      "@id": "gov:subtype",
+      "@type": "xsd:string"
+    },
+    "subType": {
+      "@id": "gov:subType",
+      "@type": "xsd:string"
+    },
+    "subType2": {
+      "@id": "gov:subType2",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "gov:category",
+      "@type": "xsd:string"
+    },
+
+    "postedDate": {
+      "@id": "gov:postedDate",
+      "@type": "xsd:dateTime"
+    },
+    "receiveDate": {
+      "@id": "gov:receiveDate",
+      "@type": "xsd:dateTime"
+    },
+    "modifyDate": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    "lastModifiedDate": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    },
+    "effectiveDate": {
+      "@id": "gov:effectiveDate",
+      "@type": "xsd:dateTime"
+    },
+    "implementationDate": {
+      "@id": "gov:implementationDate",
+      "@type": "xsd:dateTime"
+    },
+    "authorDate": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "commentStartDate": {
+      "@id": "gov:commentStartDate",
+      "@type": "xsd:dateTime"
+    },
+    "commentEndDate": {
+      "@id": "gov:commentEndDate",
+      "@type": "xsd:dateTime"
+    },
+    "postmarkDate": {
+      "@id": "gov:postmarkDate",
+      "@type": "xsd:dateTime"
+    },
+
+    "openForComment": {
+      "@id": "gov:openForComment",
+      "@type": "xsd:boolean"
+    },
+    "withdrawn": {
+      "@id": "gov:withdrawn",
+      "@type": "xsd:boolean"
+    },
+    "allowLateComments": {
+      "@id": "gov:allowLateComments",
+      "@type": "xsd:boolean"
+    },
+    "sendEmailReceipt": {
+      "@id": "gov:sendEmailReceipt",
+      "@type": "xsd:boolean"
+    },
+
+    "commentOnDocumentId": {
+      "@id": "gov:commentOnDocumentId",
+      "@type": "xsd:string"
+    },
+    "docketId": {
+      "@id": "gov:docketId",
+      "@type": "xsd:string"
+    },
+    "duplicateComments": {
+      "@id": "gov:duplicateComments",
+      "@type": "xsd:integer"
+    },
+
+    "firstName": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "organization": {
+      "@id": "schema:affiliation",
+      "@type": "xsd:string"
+    },
+    "organizationType": {
+      "@id": "gov:organizationType",
+      "@type": "xsd:string"
+    },
+    "govAgency": {
+      "@id": "gov:govAgency",
+      "@type": "xsd:string"
+    },
+    "govAgencyType": {
+      "@id": "gov:govAgencyType",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "schema:telephone",
+      "@type": "xsd:string"
+    },
+    "fax": {
+      "@id": "schema:faxNumber",
+      "@type": "xsd:string"
+    },
+    "address1": {
+      "@id": "schema:streetAddress",
+      "@type": "xsd:string"
+    },
+    "address2": {
+      "@id": "gov:address2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "stateProvinceRegion": {
+      "@id": "schema:addressRegion",
+      "@type": "xsd:string"
+    },
+    "zip": {
+      "@id": "schema:postalCode",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "schema:addressCountry",
+      "@type": "xsd:string"
+    },
+
+    "authors": {
+      "@id": "dcterms:creator",
+      "@type": "xsd:string",
+      "@container": "@set"
+    },
+    "fileFormats": {
+      "@id": "gov:fileFormats",
+      "@container": "@set"
+    },
+    "fileUrl": {
+      "@id": "schema:contentUrl",
+      "@type": "@id"
+    },
+    "format": {
+      "@id": "dcterms:format",
+      "@type": "xsd:string"
+    },
+    "size": {
+      "@id": "schema:contentSize",
+      "@type": "xsd:integer"
+    },
+
+    "pageCount": {
+      "@id": "gov:pageCount",
+      "@type": "xsd:string"
+    },
+    "paperLength": {
+      "@id": "gov:paperLength",
+      "@type": "xsd:integer"
+    },
+    "paperWidth": {
+      "@id": "gov:paperWidth",
+      "@type": "xsd:integer"
+    },
+    "media": {
+      "@id": "dcterms:medium",
+      "@type": "xsd:string"
+    },
+    "publication": {
+      "@id": "gov:publication",
+      "@type": "xsd:string"
+    },
+    "sourceCitation": {
+      "@id": "dcterms:bibliographicCitation",
+      "@type": "xsd:string"
+    },
+    "startEndPage": {
+      "@id": "gov:startEndPage",
+      "@type": "xsd:string"
+    },
+    "exhibitLocation": {
+      "@id": "gov:exhibitLocation",
+      "@type": "xsd:string"
+    },
+    "exhibitType": {
+      "@id": "gov:exhibitType",
+      "@type": "xsd:string"
+    },
+    "docOrder": {
+      "@id": "gov:docOrder",
+      "@type": "xsd:integer"
+    },
+    "agencyNote": {
+      "@id": "gov:agencyNote",
+      "@type": "xsd:string"
+    },
+    "restrictReason": {
+      "@id": "gov:restrictReason",
+      "@type": "xsd:string"
+    },
+    "restrictReasonType": {
+      "@id": "gov:restrictReasonType",
+      "@type": "xsd:string"
+    },
+    "reasonWithdrawn": {
+      "@id": "gov:reasonWithdrawn",
+      "@type": "xsd:string"
+    },
+    "highlightedContent": {
+      "@id": "gov:highlightedContent",
+      "@type": "xsd:string"
+    },
+    "originalDocumentId": {
+      "@id": "gov:originalDocumentId",
+      "@type": "xsd:string"
+    },
+    "additionalRins": {
+      "@id": "gov:additionalRins",
+      "@type": "xsd:string",
+      "@container": "@set"
+    },
+    "program": {
+      "@id": "gov:program",
+      "@type": "xsd:string"
+    },
+    "petitionNbr": {
+      "@id": "gov:petitionNbr",
+      "@type": "xsd:string"
+    },
+    "regWriterInstruction": {
+      "@id": "gov:regWriterInstruction",
+      "@type": "xsd:string"
+    },
+    "submissionType": {
+      "@id": "gov:submissionType",
+      "@type": "xsd:string"
+    },
+    "submissionKey": {
+      "@id": "gov:submissionKey",
+      "@type": "xsd:string"
+    },
+    "numItemsReceived": {
+      "@id": "gov:numItemsReceived",
+      "@type": "xsd:integer"
+    },
+    "files": {
+      "@id": "gov:files",
+      "@type": "xsd:string",
+      "@container": "@set"
+    },
+    "field1": {
+      "@id": "gov:field1",
+      "@type": "xsd:string"
+    },
+    "field2": {
+      "@id": "gov:field2",
+      "@type": "xsd:string"
+    },
+    "generic": {
+      "@id": "gov:generic",
+      "@type": "xsd:string"
+    },
+
+    "meta": "gov:meta",
+    "hasNextPage": {
+      "@id": "gov:hasNextPage",
+      "@type": "xsd:boolean"
+    },
+    "hasPreviousPage": {
+      "@id": "gov:hasPreviousPage",
+      "@type": "xsd:boolean"
+    },
+    "numberOfElements": {
+      "@id": "gov:numberOfElements",
+      "@type": "xsd:integer"
+    },
+    "pageNumber": {
+      "@id": "gov:pageNumber",
+      "@type": "xsd:integer"
+    },
+    "pageSize": {
+      "@id": "gov:pageSize",
+      "@type": "xsd:integer"
+    },
+    "totalElements": {
+      "@id": "gov:totalElements",
+      "@type": "xsd:integer"
+    },
+    "totalPages": {
+      "@id": "gov:totalPages",
+      "@type": "xsd:integer"
+    },
+    "firstPage": {
+      "@id": "gov:firstPage",
+      "@type": "xsd:boolean"
+    },
+    "lastPage": {
+      "@id": "gov:lastPage",
+      "@type": "xsd:boolean"
+    }
+  }
+}

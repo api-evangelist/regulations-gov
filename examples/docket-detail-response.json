@@ -1,0 +1,31 @@
+{
+  "data": {
+    "id": "EPA-HQ-OAR-2021-0257",
+    "type": "dockets",
+    "attributes": {
+      "agencyId": "EPA",
+      "category": null,
+      "dkAbstract": "This rulemaking proposes new emission standards for heavy-duty engines and vehicles to reduce air pollution and address climate change.",
+      "docketType": "Rulemaking",
+      "effectiveDate": null,
+      "field1": null,
+      "field2": null,
+      "generic": null,
+      "keywords": ["air quality", "emissions", "heavy-duty vehicles", "trucks", "buses"],
+      "legacyId": null,
+      "modifyDate": "2022-06-30T21:08:09Z",
+      "objectId": "09000064812d0001",
+      "organization": "Office of Transportation and Air Quality",
+      "petitionNbr": null,
+      "program": "Air Program",
+      "rin": "2060-AV49",
+      "shortTitle": "HD Standards",
+      "subType": null,
+      "subType2": null,
+      "title": "Control of Air Pollution From New Motor Vehicles: Heavy-Duty Engine and Vehicle Standards"
+    },
+    "links": {
+      "self": "https://api.regulations.gov/v4/dockets/EPA-HQ-OAR-2021-0257"
+    }
+  }
+}

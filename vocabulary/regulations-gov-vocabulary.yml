@@ -1,0 +1,192 @@
+vocabulary:
+  name: Regulations.gov API Vocabulary
+  description: Domain vocabulary for the Regulations.gov API covering federal regulatory dockets, documents, public comments, and rulemaking processes.
+  version: "1.0"
+  provider: regulations-gov
+  updated: '2026-06-13'
+
+terms:
+
+  - term: docket
+    label: Docket
+    definition: A collection of documents and materials related to a single federal regulatory action or proceeding. Dockets group proposed rules, final rules, supporting documents, and public comments under a common identifier.
+    type: entity
+    schema_ref: "#/components/schemas/Docket"
+    example: "EPA-HQ-OAR-2021-0257"
+
+  - term: docketId
+    label: Docket ID
+    definition: A unique alphanumeric identifier assigned to a regulatory docket. Formatted as AGENCY-TYPE-YEAR-SEQUENCE (e.g., EPA-HQ-OAR-2021-0257).
+    type: identifier
+    example: "EPA-HQ-OAR-2021-0257"
+
+  - term: docketType
+    label: Docket Type
+    definition: Classifies a docket as either Rulemaking (a formal regulatory action) or Nonrulemaking (other agency proceedings such as guidance, adjudications, or informational materials).
+    type: enumeration
+    values:
+      - Rulemaking
+      - Nonrulemaking
+
+  - term: document
+    label: Document
+    definition: A regulatory filing associated with a docket, including proposed rules, final rules, notices, supporting materials, and public comments. Each document has a unique documentId.
+    type: entity
+    schema_ref: "#/components/schemas/Document"
+
+  - term: documentId
+    label: Document ID
+    definition: A unique identifier for a specific document within a docket, typically formatted as DOCKETID-SEQUENCE (e.g., EPA-HQ-OAR-2021-0257-0001).
+    type: identifier
+    example: "EPA-HQ-OAR-2021-0257-0001"
+
+  - term: documentType
+    label: Document Type
+    definition: Categorizes a regulatory document by its role in the rulemaking process.
+    type: enumeration
+    values:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
+
+  - term: comment
+    label: Public Comment
+    definition: A submission from a member of the public, organization, or government entity providing feedback on a proposed rule or other regulatory action. Comments become part of the official rulemaking record.
+    type: entity
+    schema_ref: "#/components/schemas/Comment"
+
+  - term: commentId
+    label: Comment ID
+    definition: A unique identifier assigned to a public comment submission.
+    type: identifier
+
+  - term: commentOnDocumentId
+    label: Comment On Document ID
+    definition: The documentId of the parent regulatory document on which the comment was submitted.
+    type: reference
+
+  - term: commentPeriod
+    label: Comment Period
+    definition: The window of time during which the public may submit comments on a proposed rule or notice, bounded by commentStartDate and commentEndDate.
+    type: concept
+
+  - term: commentEndDate
+    label: Comment End Date
+    definition: The date and time after which the agency will no longer accept public comments on a document.
+    type: date-time
+
+  - term: commentStartDate
+    label: Comment Start Date
+    definition: The date and time when the public comment period opens for a document.
+    type: date-time
+
+  - term: agencyId
+    label: Agency ID
+    definition: An acronym identifying the federal agency that issued or manages a docket or document (e.g., EPA, FDA, DOT, USDA).
+    type: identifier
+    example: "EPA"
+
+  - term: rin
+    label: Regulation Identifier Number (RIN)
+    definition: An Office of Management and Budget (OMB) issued number that uniquely identifies a regulatory action (docket) across all federal agencies. Used in the Unified Regulatory Agenda.
+    type: identifier
+    example: "2060-AV49"
+
+  - term: frDocNum
+    label: Federal Register Document Number
+    definition: The unique identifier assigned to a document published in the Federal Register.
+    type: identifier
+    example: "2021-14337"
+
+  - term: frVolNum
+    label: Federal Register Volume Number
+    definition: The volume number of the Federal Register in which the document was published.
+    type: string
+
+  - term: cfrPart
+    label: CFR Part
+    definition: The Code of Federal Regulations (CFR) citation identifying the section of federal law that a regulatory document amends or references (e.g., 40 CFR Part 86).
+    type: reference
+
+  - term: ombApproval
+    label: OMB Approval Number
+    definition: The control number assigned by the Office of Management and Budget (OMB) under the Paperwork Reduction Act (PRA) for information collections associated with a document.
+    type: identifier
+
+  - term: submitterType
+    label: Submitter Type
+    definition: Classifies the entity submitting a public comment.
+    type: enumeration
+    values:
+      - Anonymous
+      - Individual
+      - Organization
+
+  - term: openForComment
+    label: Open For Comment
+    definition: Boolean flag indicating whether a document is currently within its open comment period and accepting public submissions.
+    type: boolean
+
+  - term: withdrawn
+    label: Withdrawn
+    definition: Boolean flag indicating whether a document or comment has been officially withdrawn by the submitter or agency.
+    type: boolean
+
+  - term: attachment
+    label: Attachment
+    definition: A file attached to a regulatory document or public comment, such as a PDF, Word document, or spreadsheet. Accessible via the `include=attachments` parameter.
+    type: entity
+    schema_ref: "#/components/schemas/Attachment"
+
+  - term: trackingNbr
+    label: Tracking Number
+    definition: A system-assigned number used to track a comment submission through the Regulations.gov platform.
+    type: identifier
+
+  - term: objectId
+    label: Object ID
+    definition: The internal system identifier for a document, comment, or docket within the Regulations.gov platform.
+    type: identifier
+
+  - term: postedDate
+    label: Posted Date
+    definition: The date that a document or comment was officially posted/published on Regulations.gov by the responsible agency.
+    type: date-time
+
+  - term: receiveDate
+    label: Receive Date
+    definition: The date that the agency received a document or comment submission.
+    type: date-time
+
+  - term: effectiveDate
+    label: Effective Date
+    definition: The date on which a rule or regulatory action takes legal effect.
+    type: date-time
+
+  - term: subtype
+    label: Subtype
+    definition: An agency-specific attribute that further classifies a document or docket beyond its primary type (e.g., "Technical Report", "Guidance Document").
+    type: string
+
+  - term: category
+    label: Category
+    definition: An agency-specific grouping applied to comments or dockets to organize related submissions by type or topic area.
+    type: string
+
+  - term: searchTerm
+    label: Search Term
+    definition: A keyword or phrase used to filter search results across documents, comments, or dockets using full-text search.
+    type: filter-parameter
+
+  - term: pagination
+    label: Pagination
+    definition: The mechanism for navigating large result sets using page[number] and page[size] parameters, with metadata returned in the `meta` object.
+    type: concept
+
+  - term: jsonApi
+    label: JSON:API
+    definition: The JSON:API specification (jsonapi.org) used as the response format for all Regulations.gov API endpoints. Responses include `data`, `meta`, and optionally `included` and `links` objects.
+    type: specification
+    url: https://jsonapi.org/

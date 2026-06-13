@@ -1,0 +1,19 @@
+{
+  "data": {
+    "type": "comments",
+    "attributes": {
+      "commentOnDocumentId": "EPA-HQ-OAR-2021-0257-0001",
+      "comment": "I support stronger emission standards for heavy-duty vehicles. Cleaner trucks and buses will significantly improve air quality in communities near highways and freight corridors. The proposed standards are technically feasible given current engine technology and should be adopted as proposed.",
+      "submissionType": "API",
+      "submitterType": "Individual",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "city": "Denver",
+      "stateProvinceRegion": "CO",
+      "country": "USA",
+      "zip": "80202",
+      "email": "jane.doe@example.com",
+      "sendEmailReceipt": true
+    }
+  }
+}
