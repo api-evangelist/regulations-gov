@@ -38,6 +38,10 @@ apis:
         url: https://www.regulations.gov/support
         email: eRulemaking@gsa.gov
 common:
+  - type: DomainSecurity
+    url: security/regulations-gov-domain-security.yml
+  - type: Authentication
+    url: authentication/regulations-gov-authentication.yml
   - type: Website
     url: https://www.regulations.gov/
   - type: Documentation
