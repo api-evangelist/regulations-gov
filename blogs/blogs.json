@@ -2,13 +2,14 @@
   "repo": "regulations-gov",
   "feeds": [
     {
-      "source": "https://www.gsa.gov/blog",
-      "feed_url": "",
+      "source": "https://github.com/GSA",
+      "feed_url": "https://github.com/GSA",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-27T13:04:52Z",
-  "agent_pulled": "2026-06-27"
+  "fetched": "2026-07-11T11:50:51Z",
+  "agent_pulled": "2026-07-04"
 }
