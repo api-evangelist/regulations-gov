@@ -1,0 +1,537 @@
+openapi: 3.0.0
+info:
+  title: Regulations.gov comment submission utilities comments API
+  description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
+  version: '4.0'
+  contact:
+    name: Regulations.gov Support
+    url: https://www.regulations.gov/support
+    email: eRulemaking@gsa.gov
+  x-api-id: regulations-gov:regulations-gov-api
+servers:
+- url: https://api.regulations.gov/v4
+  description: Production endpoint for Regulations.gov API
+security:
+- ApiKeyAuth: []
+tags:
+- name: comments
+  description: Public comments submitted on regulatory documents
+paths:
+  /comments:
+    get:
+      summary: List of comments
+      description: This endpoint returns list of comments
+      tags:
+      - comments
+      parameters:
+      - name: filter[agencyId]
+        in: query
+        description: '''Filters results for the agency acronym specified in the value. Example: ''''EPA'''''''
+        required: false
+        schema:
+          type: string
+      - name: filter[searchTerm]
+        in: query
+        description: Filters results on the given term.
+        required: false
+        schema:
+          type: string
+      - name: filter[postedDate]
+        in: query
+        description: Filters results relative to the posted date.  The value must be formatted as `yyyy-MM-dd`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: filter[lastModifiedDate]
+        in: query
+        description: Filters results relative to the last modified date.  The value must be formatted as `yyyy-MM-dd HH:mm:ss`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: filter[commentOnId]
+        in: query
+        description: Filters results on the supplied commentOnId
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: Sorts the results on the field specified in the value.  The default behavior will sort the results in ascending order; to sort in descending order, prepend a minus sign to the value. <br/><br/> The only supported values are `postedDate`, `lastModifiedDate` and `documentId`. Multiple sort options can be passed in as a comma separated list to sort results by multiple fields.
+        required: false
+        schema:
+          type: string
+      - name: page[number]
+        in: query
+        description: Specifies the number for the page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 1 and 20.
+        required: false
+        schema:
+          type: integer
+      - name: page[size]
+        in: query
+        description: Specifies the size per page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 5 and 250.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A JSON:API document with the a list of comments
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CommentFindAllResponse'
+        '400':
+          description: Validation error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '403':
+          description: API key is missing or invalid
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+  /comments/{commentId}:
+    get:
+      summary: Get detailed information for specified commentId
+      description: Gets the detailed information of a specific comment with the passed commentId.
+      tags:
+      - comments
+      parameters:
+      - name: commentId
+        in: path
+        description: ID of comment to return
+        required: true
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: resources to include
+        example: attachments
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/CommentFindOneResponse'
+        '400':
+          description: Validation error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '403':
+          description: API key is missing or invalid
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '404':
+          description: Document not found
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+components:
+  schemas:
+    FindAllResponseMetadata:
+      description: Pagination metadata for list responses
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        numberOfElements:
+          type: integer
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        firstPage:
+          type: boolean
+        lastPage:
+          type: boolean
+    CommentFindAllItem:
+      description: A JSON:API document which represents a single comment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `documentId`
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Comment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    CommentFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of comments where each comment is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/CommentFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
+    AttachmentFindAllItem:
+      description: A JSON:API document which represents a single attachment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `attachmentId`
+          type: string
+        type:
+          description: The JSON:API resource type `attachments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Attachment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    FileFormat:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          description: URL of the file on S3
+        format:
+          type: string
+          description: The format of the file such as `pdf`
+        size:
+          type: integer
+          description: The file size
+    CommentFindOneResponse:
+      description: A JSON:API document which represents a single comment
+      type: object
+      properties:
+        id:
+          description: The JSON:API resource ID (documentId of the comment).
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/CommentDetail'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+        included:
+          description: The list of attachments included with the comment
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachmentFindAllItem'
+    Attachment:
+      type: object
+      properties:
+        agencyNote:
+          type: string
+          description: The note by agency
+        authors:
+          type: array
+          items:
+            type: string
+          description: The individual, organization, or group of collaborators that contributed to the creation of the attachment.
+        docAbstract:
+          type: string
+          description: The detailed description of the attachment.
+        docOrder:
+          type: integer
+          description: The order of the attachment
+        fileFormats:
+          type: array
+          description: list of file formats
+          items:
+            $ref: '#/components/schemas/FileFormat'
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the attachment was last modified.
+        publication:
+          type: string
+          description: The publication date
+        restrictReason:
+          type: string
+          description: If the attachment is restricted, this field will state the reason.
+        restrictReasonType:
+          type: string
+          description: If the attachment is restricted, this field will state the type of restriction.
+        title:
+          type: string
+          description: The formal title of the attachment
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    CommentDetail:
+      allOf:
+      - $ref: '#/components/schemas/BasicDetailModel'
+      - type: object
+        required:
+        - documentId
+        properties:
+          commentOnDocumentId:
+            type: string
+            description: documentId of the parent document.
+          duplicateComments:
+            type: integer
+            description: Number of duplicate comments
+    BasicDetailModel:
+      type: object
+      properties:
+        address1:
+          type: string
+          nullable: true
+          description: The first line of the submitter's address.
+        address2:
+          type: string
+          nullable: true
+          description: The second line of the submitter's address.
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        city:
+          type: string
+          nullable: true
+          description: The city associated with the submitter's address.
+        category:
+          type: string
+          nullable: true
+          description: An agency-specific category allowing agencies to group comments according to their type.
+        comment:
+          type: string
+          description: The comment text associated with the comment submission.
+        country:
+          type: string
+          nullable: true
+          description: The country associated with the submitter's address.
+        docAbstract:
+          type: string
+          description: The detailed description of the document.
+        docketId:
+          type: string
+          description: The ID of the docket to which the document corresponds.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        email:
+          type: string
+          nullable: true
+          description: The submitter's e-mail address.
+        fax:
+          type: string
+          nullable: true
+          description: The submitter's fax number.
+        field1:
+          type: string
+          nullable: true
+          description: An agency-specific field used for storing additional data with the document.
+        field2:
+          type: string
+          nullable: true
+          description: An agency-specific field used for storing additional data with the document.
+        fileFormats:
+          type: array
+          description: list of file formats
+          items:
+            $ref: '#/components/schemas/FileFormat'
+        firstName:
+          type: string
+          nullable: true
+          description: The submitter's first name.
+        govAgency:
+          type: string
+          nullable: true
+          description: The name of the government agency that the submitter represents.
+        govAgencyType:
+          type: string
+          nullable: true
+          description: The type of government agency that the submitter represents.
+        lastName:
+          type: string
+          nullable: true
+          description: The submitter's last name.
+        legacyId:
+          type: string
+          nullable: true
+          description: An agency-specific identifier that was given to the document in the legacy system.
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the document was last modified.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        openForComment:
+          type: boolean
+          description: Conveys if the document is open for commenting.
+        organization:
+          type: string
+          nullable: true
+          description: The organization that the submitter represents.
+        originalDocumentId:
+          type: string
+          description: The document ID that was assigned when first entered into the system.
+        pageCount:
+          type: string
+          nullable: true
+          description: Conveys the number of pages contained in the document.
+        phone:
+          type: string
+          nullable: true
+          description: The submitter's phone number.
+        postedDate:
+          type: string
+          format: date-time
+          description: The date that the document was posted by the agency to the system.
+        postmarkDate:
+          type: string
+          nullable: true
+          format: date-time
+          description: The postmark date of a document that was sent by mail.
+        reasonWithdrawn:
+          type: string
+          nullable: true
+          description: If the document is withdrawn, this field will state the reason.
+        receiveDate:
+          type: string
+          format: date-time
+          description: The date that the document was received by the agency.
+        restrictReason:
+          type: string
+          description: If the document is restricted, this field will state the reason.
+        restrictReasonType:
+          type: string
+          description: If the document is restricted, this field will state the type of restriction.
+        stateProvinceRegion:
+          type: string
+          nullable: true
+          description: The submitter's state, province or region.
+        subtype:
+          type: string
+          nullable: true
+          description: An agency-specific attribute to further categorize a document beyond the documentType.
+        title:
+          type: string
+          description: The formal title of the document.
+        trackingNbr:
+          type: string
+          description: The tracking number of the submission.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn.
+        zip:
+          type: string
+          description: The zip associated with the submitter's address.
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
+    Comment:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        highlightedContent:
+          type: string
+          nullable: true
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date comment was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the comment in our system.
+        postedDate:
+          type: string
+          description: The date that the document was posted by the agency to the system.
+        title:
+          type: string
+          description: The formal title of the document.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
+    RelationshipLinks:
+      description: Relationship links to other related resources (`attachments`)
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+        related:
+          $ref: '#/components/schemas/Link'
+      additionalProperties: false
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    Relationship:
+      description: A single relationship object
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipToAttachment'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+      additionalProperties: false
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key

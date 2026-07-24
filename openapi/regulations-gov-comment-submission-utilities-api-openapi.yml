@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Regulations.gov comment submission utilities API
+  description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
+  version: '4.0'
+  contact:
+    name: Regulations.gov Support
+    url: https://www.regulations.gov/support
+    email: eRulemaking@gsa.gov
+  x-api-id: regulations-gov:regulations-gov-api
+servers:
+- url: https://api.regulations.gov/v4
+  description: Production endpoint for Regulations.gov API
+security:
+- ApiKeyAuth: []
+tags:
+- name: comment submission utilities
+  description: Utilities to support submitting public comments
+paths:
+  /agency-categories:
+    get:
+      summary: Returns a list of categories
+      description: This endpoint returns list of categories
+      tags:
+      - comment submission utilities
+      parameters:
+      - name: filter[acronym]
+        in: query
+        description: '''Filters results for the agency acronym specified in the value. Example: ''''EPA'''''''
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of agency categories
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        default:
+                          type: boolean
+                          description: Defines if its the default category value
+                        acronym:
+                          type: string
+                          description: Agency acronym
+                        categories:
+                          type: string
+                          description: The name of the category
+        '400':
+          description: Validation error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '403':
+          description: API key is missing or invalid
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+components:
+  schemas:
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key

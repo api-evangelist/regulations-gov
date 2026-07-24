@@ -1,0 +1,332 @@
+openapi: 3.0.0
+info:
+  title: Regulations.gov comment submission utilities dockets API
+  description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
+  version: '4.0'
+  contact:
+    name: Regulations.gov Support
+    url: https://www.regulations.gov/support
+    email: eRulemaking@gsa.gov
+  x-api-id: regulations-gov:regulations-gov-api
+servers:
+- url: https://api.regulations.gov/v4
+  description: Production endpoint for Regulations.gov API
+security:
+- ApiKeyAuth: []
+tags:
+- name: dockets
+  description: Regulatory dockets grouping related documents
+paths:
+  /dockets:
+    get:
+      summary: List of dockets
+      description: This endpoint returns list of dockets
+      tags:
+      - dockets
+      parameters:
+      - name: filter[agencyId]
+        in: query
+        description: '''Filters results for the agency acronym specified in the value. Example: ''''EPA'''''''
+        required: false
+        schema:
+          type: string
+      - name: filter[searchTerm]
+        in: query
+        description: Filters results on the given term.
+        required: false
+        schema:
+          type: string
+      - name: filter[lastModifiedDate]
+        in: query
+        description: Filters results relative to the last modified date.  The value must be formatted as `yyyy-MM-dd HH:mm:ss`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: filter[docketType]
+        in: query
+        description: Filters results on the specified docket type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/DocketType'
+      - name: sort
+        in: query
+        description: Sorts the results on the field specified in the value.  The default behavior will sort the results in ascending order; to sort in descending order, prepend a minus sign to the value. <br/><br/> The only supported values are `title`, `docketId` and `lastModifiedDate`. Multiple sort options can be passed in as a comma separated list to sort results by multiple fields.
+        required: false
+        schema:
+          type: string
+      - name: page[number]
+        in: query
+        description: Specifies the number for the page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 1 and 20.
+        required: false
+        schema:
+          type: integer
+      - name: page[size]
+        in: query
+        description: Specifies the size per page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 5 and 250.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A JSON:API document with the a list of dockets
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/DocketFindAllResponse'
+        '400':
+          description: Validation error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '403':
+          description: API key is missing or invalid
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+  /dockets/{docketId}:
+    get:
+      tags:
+      - dockets
+      summary: Get detailed information for specified docketId
+      description: Gets the detailed information of a specific docket with the passed docketId.
+      parameters:
+      - name: docketId
+        in: path
+        description: ID of docket to return
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/DocketFindOneResponse'
+        '400':
+          description: Validation error
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '403':
+          description: API key is missing or invalid
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+        '404':
+          description: Document not found
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/JSONError'
+components:
+  schemas:
+    DocketFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of dockets where each docket is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/DocketFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
+    FindAllResponseMetadata:
+      description: Pagination metadata for list responses
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        numberOfElements:
+          type: integer
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        firstPage:
+          type: boolean
+        lastPage:
+          type: boolean
+    DocketFindOneResponse:
+      description: A JSON:API document which represents a single docket
+      type: object
+      properties:
+        id:
+          description: The JSON:API resource ID (docketId of the docket)
+          type: string
+        type:
+          description: The JSON:API resource type `dockets`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/DocketDetail'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    DocketFindAllItem:
+      description: A JSON:API document which represents a single docket in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `docketId`
+          type: string
+        type:
+          description: The JSON:API resource type `dockets`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Docket'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    DocketDetail:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the docket.
+        category:
+          type: string
+          nullable: true
+          description: Agency specific docket category providing regulatory action details, status, and the agency program and or office.
+        dkAbstract:
+          type: string
+          description: The detailed description of the docket.
+        docketType:
+          $ref: '#/components/schemas/DocketType'
+        effectiveDate:
+          type: string
+          format: date-time
+          description: The date the docket is put into effect.
+        field1:
+          type: string
+          nullable: true
+          description: An agency-specific field used for storing additional data with the docket.
+        field2:
+          type: string
+          nullable: true
+          description: An agency-specific field used for storing additional data with the docket.
+        generic:
+          type: string
+          nullable: true
+          description: An agency-specific field used for storing additional data with the docket.
+        keywords:
+          type: array
+          nullable: true
+          items:
+            type: string
+            description: Agency selected keywords associated with a docket to improve its searchability by the public.
+        legacyId:
+          type: string
+          nullable: true
+          description: An agency-specific identifier that was given to the docket in the legacy system.
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the docket was last modified.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        organization:
+          type: string
+          nullable: true
+          description: Identifies docket's (a regulatory action) originating agency and/or department.
+        petitionNbr:
+          type: string
+          nullable: true
+          description: Agency specific identifier associated with a docket.
+        program:
+          type: string
+          nullable: true
+          description: The agency specific program associated with the docket.
+        rin:
+          type: string
+          nullable: true
+          description: OMB issued Regulation Identifier Number (RIN) uniquely identifies a docket and its documents.
+        shortTitle:
+          type: string
+          nullable: true
+          description: A combination of letters and or numbers assigned to an agency's regulatory action for purposes of brevity.
+        subType:
+          type: string
+          nullable: true
+          description: This agency specific attribute characterizes a docket (regulatory action) beyond its assigned docket type.
+        subType2:
+          type: string
+          nullable: true
+          description: This agency specific attribute characterizes a docket (regulatory action) beyond the designated docket subtype.
+        title:
+          type: string
+          description: A name or descriptive heading given to an agency's docket.
+    Docket:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the docket.
+        docketType:
+          $ref: '#/components/schemas/DocketType'
+        highlightedContent:
+          type: string
+          nullable: true
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date docket was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the docket in our system.
+        title:
+          type: string
+          description: The formal title of the docket.
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    DocketType:
+      type: string
+      description: the type of docket
+      enum:
+      - Rulemaking
+      - Nonrulemaking
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
