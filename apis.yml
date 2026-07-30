@@ -1,7 +1,20 @@
 aid: regulations-gov
 name: Regulations.gov
 description: Regulations.gov is the US federal government's central portal for public participation in the rulemaking process, operated by the General Services Administration. Its REST API enables programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies. Developers can search and filter content across all federal agencies, retrieve full document and comment details with attachments, and submit public comments programmatically. The API is managed through api.data.gov and uses API key authentication.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/regulations-gov.png
 url: https://raw.githubusercontent.com/api-evangelist/regulations-gov/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -16,27 +29,54 @@ tags:
   - GSA
   - Open Data
 apis:
-  - aid: regulations-gov:regulations-gov-api
-    name: Regulations.gov API
-    description: REST API providing access to federal regulatory dockets, documents, and public comments across all federal agencies. Supports full-text search, filtering by agency and date range, pagination, and comment submission.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://open.gsa.gov/api/regulationsgov/
-    baseURL: https://api.regulations.gov
-    tags:
-      - Government
-      - Federal Rulemaking
-      - Public Comments
-      - Dockets
-      - Documents
-    properties:
-      - type: Documentation
-        url: https://open.gsa.gov/api/regulationsgov/
-      - type: OpenAPI
-        url: https://api.regulations.gov/v4/openapi.yaml
-    contact:
-      - FN: Regulations.gov Support
-        url: https://www.regulations.gov/support
-        email: eRulemaking@gsa.gov
+- aid: regulations-gov:regulations-gov-comment-submission-utilities-api
+  name: Regulations.gov comment submission utilities API
+  description: Utilities to support submitting public comments
+  humanURL: https://open.gsa.gov/api/regulationsgov/
+  baseURL: https://api.regulations.gov
+  tags:
+  - comment submission utilities
+  properties:
+  - type: OpenAPI
+    url: openapi/regulations-gov-comment-submission-utilities-api-openapi.yml
+  - type: Documentation
+    url: https://open.gsa.gov/api/regulationsgov/
+- aid: regulations-gov:regulations-gov-comments-api
+  name: Regulations.gov comments API
+  description: Public comments submitted on regulatory documents
+  humanURL: https://open.gsa.gov/api/regulationsgov/
+  baseURL: https://api.regulations.gov
+  tags:
+  - comments
+  properties:
+  - type: OpenAPI
+    url: openapi/regulations-gov-comments-api-openapi.yml
+  - type: Documentation
+    url: https://open.gsa.gov/api/regulationsgov/
+- aid: regulations-gov:regulations-gov-dockets-api
+  name: Regulations.gov dockets API
+  description: Regulatory dockets grouping related documents
+  humanURL: https://open.gsa.gov/api/regulationsgov/
+  baseURL: https://api.regulations.gov
+  tags:
+  - dockets
+  properties:
+  - type: OpenAPI
+    url: openapi/regulations-gov-dockets-api-openapi.yml
+  - type: Documentation
+    url: https://open.gsa.gov/api/regulationsgov/
+- aid: regulations-gov:regulations-gov-documents-api
+  name: Regulations.gov documents API
+  description: Federal regulatory documents including notices, rules, and proposed rules
+  humanURL: https://open.gsa.gov/api/regulationsgov/
+  baseURL: https://api.regulations.gov
+  tags:
+  - documents
+  properties:
+  - type: OpenAPI
+    url: openapi/regulations-gov-documents-api-openapi.yml
+  - type: Documentation
+    url: https://open.gsa.gov/api/regulationsgov/
 common:
   - type: AgenticAccess
     url: agentic-access/regulations-gov-agentic-access.yml
