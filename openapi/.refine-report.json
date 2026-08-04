@@ -1,0 +1,20 @@
+{
+  "provider": "regulations-gov",
+  "sources": [
+    "regulations-gov-comment-submission-utilities-api-openapi.yml",
+    "regulations-gov-comments-api-openapi.yml",
+    "regulations-gov-dockets-api-openapi.yml",
+    "regulations-gov-documents-api-openapi.yml"
+  ],
+  "outputs": [
+    "regulations-gov-comment-submission-utilities-api-openapi.yml",
+    "regulations-gov-comments-api-openapi.yml",
+    "regulations-gov-dockets-api-openapi.yml",
+    "regulations-gov-documents-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
