@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Regulations.gov comment submission utilities documents API",
+    "version": "4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regulations.gov/v4/documents",
+            "params": [
+              {
+                "name": "filter[agencyId]",
+                "value": "",
+                "type": "query",
+                "description": "'Filters results for the agency acronym specified in the value. Example: ''EPA'''"
+              },
+              {
+                "name": "filter[commentEndDate]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results relative to the comment end date.  The value must be formatted as `yyyy-MM-dd`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+              },
+              {
+                "name": "filter[docketId]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results on the specified docket ID."
+              },
+              {
+                "name": "filter[documentType]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results on the specified document type."
+              },
+              {
+                "name": "filter[frDocNum]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results on the specified frDocNum."
+              },
+              {
+                "name": "filter[searchTerm]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results on the given term."
+              },
+              {
+                "name": "filter[postedDate]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results relative to the posted date.  The value must be formatted as `yyyy-MM-dd`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+              },
+              {
+                "name": "filter[lastModifiedDate]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results relative to the last modified date.  The value must be formatted as `yyyy-MM-dd HH:mm:ss`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+              },
+              {
+                "name": "filter[subtype]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results on the supplied document subtype"
+              },
+              {
+                "name": "filter[withinCommentPeriod]",
+                "value": "",
+                "type": "query",
+                "description": "Filters results for documents that are open for comment by setting the value to `true`. <br/><br/> _`False` is not an acceptable value for this parameter, hence it should be removed when not being used._"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sorts the results on the field specified in the value.  The default behavior will sort the results in ascending order; to sort in descending order, prepend a minus sign to the value. <br/><br/> Supported values are `commentEndDate`, `postedDate`, `lastModifiedDate`, `documentId` and `title`. Multiple sort options can be passed in as a comma separated list to sort results by multiple fields."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the number for the page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 1 and 20."
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the size per page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 5 and 250."
+              }
+            ]
+          },
+          "docs": "This endpoint returns list of documents"
+        },
+        {
+          "info": {
+            "name": "Get detailed information for specified documentId",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regulations.gov/v4/documents/:documentId",
+            "params": [
+              {
+                "name": "documentId",
+                "value": "",
+                "type": "path",
+                "description": "ID of document to return"
+              },
+              {
+                "name": "include",
+                "value": "attachments",
+                "type": "query",
+                "description": "resources to include"
+              }
+            ]
+          },
+          "docs": "Gets the detailed information of a specific document with the passed documentId."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

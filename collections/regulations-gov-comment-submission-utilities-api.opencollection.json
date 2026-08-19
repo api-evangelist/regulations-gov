@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Regulations.gov comment submission utilities API",
+    "version": "4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "comment submission utilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.regulations.gov/v4/agency-categories",
+            "params": [
+              {
+                "name": "filter[acronym]",
+                "value": "",
+                "type": "query",
+                "description": "'Filters results for the agency acronym specified in the value. Example: ''EPA'''"
+              }
+            ]
+          },
+          "docs": "This endpoint returns list of categories"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

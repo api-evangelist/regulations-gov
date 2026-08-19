@@ -1,0 +1,595 @@
+{
+  "item": [
+    {
+      "id": "b61a717b-0960-4d18-81ae-cc1004a28304",
+      "name": "dockets",
+      "description": {
+        "content": "Regulatory dockets grouping related documents",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "47728f47-55c3-48a6-8418-8c6c90c314d1",
+          "name": "List of dockets",
+          "request": {
+            "name": "List of dockets",
+            "description": {
+              "content": "This endpoint returns list of dockets",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "dockets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[agencyId]",
+                  "value": "<string>",
+                  "description": "'Filters results for the agency acronym specified in the value. Example: ''EPA'''"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[searchTerm]",
+                  "value": "<string>",
+                  "description": "Filters results on the given term."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[lastModifiedDate]",
+                  "value": "<date>",
+                  "description": "Filters results relative to the last modified date.  The value must be formatted as `yyyy-MM-dd HH:mm:ss`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[docketType]",
+                  "value": "<string>",
+                  "description": "Filters results on the specified docket type."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sorts the results on the field specified in the value.  The default behavior will sort the results in ascending order; to sort in descending order, prepend a minus sign to the value. <br/><br/> The only supported values are `title`, `docketId` and `lastModifiedDate`. Multiple sort options can be passed in as a comma separated list to sort results by multiple fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "<integer>",
+                  "description": "Specifies the number for the page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 1 and 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "<integer>",
+                  "description": "Specifies the size per page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 5 and 250."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f9a1bd7-6e30-45ee-848f-c6c844d98167",
+              "name": "A JSON:API document with the a list of dockets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[docketType]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyId\": \"string\",\n        \"docketType\": \"<string>\",\n        \"highlightedContent\": \"string\",\n        \"lastModifiedDate\": \"2024-01-13T21:45:01.752Z\",\n        \"objectId\": \"string\",\n        \"title\": \"string\"\n      },\n      \"links\": [\n        {\n          \"self\": \"http://gsPBCYgHcyVYDQqlBkb.xnCLP9buI85T1?kwizbbg&a&dd=z&\"\n        },\n        {\n          \"self\": \"https://nINDqmwisnxSSDYyVTaKRgwSyjEQRo.yeDbl+k9,UT-u\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyId\": \"string\",\n        \"docketType\": \"<string>\",\n        \"highlightedContent\": \"string\",\n        \"lastModifiedDate\": \"1976-11-18T03:06:49.052Z\",\n        \"objectId\": \"string\",\n        \"title\": \"string\"\n      },\n      \"links\": [\n        {\n          \"self\": \"http://gPWxYaiVNfzQBNnb.gcwwnXQzou4G9\"\n        },\n        {\n          \"self\": \"https://DRVaTEkisGmewwLl.xgejPD0cULHjxqI9AbyQ.zZ3yg-0lCBnnhsCVQbl+9P2VC7EX1gapihATSWT34EVqGzgAlOGJ9DaWDbX?zzodfw=I1&\"\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"hasNextPage\": true,\n    \"hasPreviousPage\": true,\n    \"numberOfElements\": 4173,\n    \"pageNumber\": 7301,\n    \"pageSize\": 5342,\n    \"totalElements\": 7190,\n    \"totalPages\": 1021,\n    \"firstPage\": true,\n    \"lastPage\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4068765-b5d3-4d50-b8cd-6b5e79b87e3e",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[docketType]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 4168,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 529,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3aaaef7e-b37c-4830-9c95-9608c6cd8b9e",
+              "name": "API key is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[docketType]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 3334,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 2693,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d254cb1-4b13-4056-8f2a-7e1e63349233",
+          "name": "Get detailed information for specified docketId",
+          "request": {
+            "name": "Get detailed information for specified docketId",
+            "description": {
+              "content": "Gets the detailed information of a specific docket with the passed docketId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "dockets",
+                ":docketId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "docketId",
+                  "description": "(Required) ID of docket to return"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd979ae2-ca7c-4e00-aa65-14f749485c35",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets",
+                    ":docketId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docketId",
+                      "description": "(Required) ID of docket to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"string\",\n  \"attributes\": {\n    \"agencyId\": \"string\",\n    \"category\": \"string\",\n    \"dkAbstract\": \"string\",\n    \"docketType\": \"<string>\",\n    \"effectiveDate\": \"1985-06-04T08:14:12.814Z\",\n    \"field1\": \"string\",\n    \"field2\": \"string\",\n    \"generic\": \"string\",\n    \"keywords\": [\n      \"string\",\n      \"string\"\n    ],\n    \"legacyId\": \"string\",\n    \"modifyDate\": \"1993-01-24T19:08:53.258Z\",\n    \"objectId\": \"string\",\n    \"organization\": \"string\",\n    \"petitionNbr\": \"string\",\n    \"program\": \"string\",\n    \"rin\": \"string\",\n    \"shortTitle\": \"string\",\n    \"subType\": \"string\",\n    \"subType2\": \"string\",\n    \"title\": \"string\"\n  },\n  \"links\": [\n    {\n      \"self\": \"http://gDjMlMaPYnHAOZOvzd.lolzUPkMA7Q.lgmtSh3IdpDoWNDGqnhMPs+bXwdx5Nz0?trzvt&sqt=hzCn&\"\n    },\n    {\n      \"self\": \"https://NZGLHkQCgniBPyjiBj.gcypIGn,YHoKCWp6iRAWu43os68cd0P8Eww8uJjtaI?\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "785b9624-0ce3-4dcb-a9a5-4bfe133860e0",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets",
+                    ":docketId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docketId",
+                      "description": "(Required) ID of docket to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 3334,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 2693,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "745942a0-d7ee-47a9-913d-cfce3ccad1a0",
+              "name": "API key is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets",
+                    ":docketId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docketId",
+                      "description": "(Required) ID of docket to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 3334,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 2693,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9c4abd8-c4fb-41a3-8263-081996225790",
+              "name": "Document not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dockets",
+                    ":docketId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "docketId",
+                      "description": "(Required) ID of docket to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 3334,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 2693,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.regulations.gov/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "20fade5f-32ba-4114-ab1f-9a816cf034e6",
+    "name": "Regulations.gov comment submission utilities dockets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.\n\nContact Support:\n Name: Regulations.gov Support\n Email: eRulemaking@gsa.gov",
+      "type": "text/plain"
+    }
+  }
+}

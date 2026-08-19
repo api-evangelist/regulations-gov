@@ -1,0 +1,640 @@
+{
+  "item": [
+    {
+      "id": "224de934-dff7-4e11-8364-1ab71b79390a",
+      "name": "comments",
+      "description": {
+        "content": "Public comments submitted on regulatory documents",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ecef3c26-09e0-4dd9-8aed-fa1e415e8a9f",
+          "name": "List of comments",
+          "request": {
+            "name": "List of comments",
+            "description": {
+              "content": "This endpoint returns list of comments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "comments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter[agencyId]",
+                  "value": "<string>",
+                  "description": "'Filters results for the agency acronym specified in the value. Example: ''EPA'''"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[searchTerm]",
+                  "value": "<string>",
+                  "description": "Filters results on the given term."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[postedDate]",
+                  "value": "<date>",
+                  "description": "Filters results relative to the posted date.  The value must be formatted as `yyyy-MM-dd`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[lastModifiedDate]",
+                  "value": "<date>",
+                  "description": "Filters results relative to the last modified date.  The value must be formatted as `yyyy-MM-dd HH:mm:ss`.<br/><br/> Omission of a parameter modifier will match results to the exact date provided, otherwise, one of the parameter modifiers below may be used. <br/> `ge` - greater than or equal <br/> `le` - less than or equal"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter[commentOnId]",
+                  "value": "<string>",
+                  "description": "Filters results on the supplied commentOnId"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sorts the results on the field specified in the value.  The default behavior will sort the results in ascending order; to sort in descending order, prepend a minus sign to the value. <br/><br/> The only supported values are `postedDate`, `lastModifiedDate` and `documentId`. Multiple sort options can be passed in as a comma separated list to sort results by multiple fields."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "<integer>",
+                  "description": "Specifies the number for the page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 1 and 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "<integer>",
+                  "description": "Specifies the size per page of results that will be returned from the query. <br/><br/> Acceptable values are numerical between, and including, 5 and 250."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22389057-79c4-45df-99c5-993d8897f9a1",
+              "name": "A JSON:API document with the a list of comments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[postedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[commentOnId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyId\": \"string\",\n        \"documentType\": \"Proposed Rule\",\n        \"highlightedContent\": \"string\",\n        \"lastModifiedDate\": \"1984-02-13T15:38:32.134Z\",\n        \"objectId\": \"string\",\n        \"postedDate\": \"string\",\n        \"title\": \"string\",\n        \"withdrawn\": true\n      },\n      \"links\": [\n        {\n          \"self\": \"https://grGZIhJKrjywEwZFr.szBNobDY5rE1ggiNYYiS66CF4su-i.3nNaa4IM0v,i\"\n        },\n        {\n          \"self\": \"https://umejeQWQiWhhE.tqicme7cAnR5qhy9yCVRdEp4nC.chR\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyId\": \"string\",\n        \"documentType\": \"Other\",\n        \"highlightedContent\": \"string\",\n        \"lastModifiedDate\": \"2014-07-08T06:29:53.893Z\",\n        \"objectId\": \"string\",\n        \"postedDate\": \"string\",\n        \"title\": \"string\",\n        \"withdrawn\": false\n      },\n      \"links\": [\n        {\n          \"self\": \"https://ajmjfEDRerOIe.swpjFmW4w12T09Ck7gLFvv3LHyQ0ae,KkTKDuXAFBKrixv\"\n        },\n        {\n          \"self\": \"http://hjDLuIkaOhAy.sbNt7kpMKwIGKrNZa9,S,.pW\"\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"hasNextPage\": false,\n    \"hasPreviousPage\": false,\n    \"numberOfElements\": 9638,\n    \"pageNumber\": 3729,\n    \"pageSize\": 6994,\n    \"totalElements\": 4115,\n    \"totalPages\": 6790,\n    \"firstPage\": true,\n    \"lastPage\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fc35f62-732f-4829-9b8d-771932c2ca58",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[postedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[commentOnId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 8032,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 677,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bb04d17-c58f-47f5-918e-9459efe84417",
+              "name": "API key is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter[agencyId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[searchTerm]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter[postedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[lastModifiedDate]",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "filter[commentOnId]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 7301,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 1855,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "760535ed-6c5e-4993-b038-fec49a166f78",
+          "name": "Get detailed information for specified commentId",
+          "request": {
+            "name": "Get detailed information for specified commentId",
+            "description": {
+              "content": "Gets the detailed information of a specific comment with the passed commentId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "comments",
+                ":commentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "resources to include"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "commentId",
+                  "description": "(Required) ID of comment to return"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "24d02b7e-c0eb-458b-8466-79d54b9e092d",
+              "name": "successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "attachments"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) ID of comment to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"string\",\n  \"attributes\": {\n    \"address1\": \"string\",\n    \"address2\": \"string\",\n    \"agencyId\": \"string\",\n    \"city\": \"string\",\n    \"category\": \"string\",\n    \"comment\": \"string\",\n    \"country\": \"string\",\n    \"docAbstract\": \"string\",\n    \"docketId\": \"string\",\n    \"documentType\": \"Proposed Rule\",\n    \"email\": \"string\",\n    \"fax\": \"string\",\n    \"field1\": \"string\",\n    \"field2\": \"string\",\n    \"fileFormats\": [\n      {\n        \"fileUrl\": \"string\",\n        \"format\": \"string\",\n        \"size\": 9777\n      },\n      {\n        \"fileUrl\": \"string\",\n        \"format\": \"string\",\n        \"size\": 8295\n      }\n    ],\n    \"firstName\": \"string\",\n    \"govAgency\": \"string\",\n    \"govAgencyType\": \"string\",\n    \"lastName\": \"string\",\n    \"legacyId\": \"string\",\n    \"modifyDate\": \"2018-05-13T04:32:17.389Z\",\n    \"objectId\": \"string\",\n    \"openForComment\": true,\n    \"organization\": \"string\",\n    \"originalDocumentId\": \"string\",\n    \"pageCount\": \"string\",\n    \"phone\": \"string\",\n    \"postedDate\": \"1949-04-03T15:11:05.943Z\",\n    \"postmarkDate\": \"2008-12-20T05:29:01.406Z\",\n    \"reasonWithdrawn\": \"string\",\n    \"receiveDate\": \"1990-02-18T23:08:14.296Z\",\n    \"restrictReason\": \"string\",\n    \"restrictReasonType\": \"string\",\n    \"stateProvinceRegion\": \"string\",\n    \"subtype\": \"string\",\n    \"title\": \"string\",\n    \"trackingNbr\": \"string\",\n    \"withdrawn\": false,\n    \"zip\": \"string\",\n    \"commentOnDocumentId\": \"string\",\n    \"duplicateComments\": 8120\n  },\n  \"relationships\": [\n    {\n      \"data\": [\n        {\n          \"type\": \"string\",\n          \"id\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"id\": \"string\"\n        }\n      ],\n      \"links\": {\n        \"self\": \"http://gkCRYEzkXmSibNjXqxvvDX.iayamcSPVikJooC0CDmzPlrlVn9eArI-dCCPpahKe4ToR0N+LGQkWU\",\n        \"related\": \"https://jTQNSyoV.gvb4SFA0sh+KS74uZP4xuKHtrtVUZbKnIH85Km5cvfLuFDAs-Jy,.rk9XhF96l\"\n      }\n    },\n    {\n      \"data\": [\n        {\n          \"type\": \"string\",\n          \"id\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"id\": \"string\"\n        }\n      ],\n      \"links\": {\n        \"self\": \"https://CuNHVlU.dsvs51X,\",\n        \"related\": \"https://JgCjTTvcdnMQAYHzb.pjvuCZeMgmF?rpu=0U8r4&wembqyp=8Z&o&\"\n      }\n    }\n  ],\n  \"links\": [\n    {\n      \"self\": \"http://V.rvkMHHSRh1fAYaGa8fCytd?szxzcm=3&\"\n    },\n    {\n      \"self\": \"http://BaafXZUBDWFFwBtKoD.higuT7K5SYbaoZcDcGDjxd8JNoBv4?l&\"\n    }\n  ],\n  \"included\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyNote\": \"string\",\n        \"authors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"docAbstract\": \"string\",\n        \"docOrder\": 3613,\n        \"fileFormats\": [\n          {\n            \"fileUrl\": \"string\",\n            \"format\": \"string\",\n            \"size\": 6043\n          },\n          {\n            \"fileUrl\": \"string\",\n            \"format\": \"string\",\n            \"size\": 6138\n          }\n        ],\n        \"modifyDate\": \"1975-12-08T02:52:33.691Z\",\n        \"publication\": \"string\",\n        \"restrictReason\": \"string\",\n        \"restrictReasonType\": \"string\",\n        \"title\": \"string\"\n      },\n      \"links\": [\n        {\n          \"self\": \"http://iiGogGblPqyxrlaP.trwQzUKZeBc5nkttwHzZI8fsk4c+W,mTmIwPv6wriENweA0lhogT+9+?u=z&dnjuihh&ddcrl&\"\n        },\n        {\n          \"self\": \"http://gjkrlSvI.ajqU\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"string\",\n      \"attributes\": {\n        \"agencyNote\": \"string\",\n        \"authors\": [\n          \"string\",\n          \"string\"\n        ],\n        \"docAbstract\": \"string\",\n        \"docOrder\": 3992,\n        \"fileFormats\": [\n          {\n            \"fileUrl\": \"string\",\n            \"format\": \"string\",\n            \"size\": 4125\n          },\n          {\n            \"fileUrl\": \"string\",\n            \"format\": \"string\",\n            \"size\": 3568\n          }\n        ],\n        \"modifyDate\": \"1977-10-15T05:09:05.402Z\",\n        \"publication\": \"string\",\n        \"restrictReason\": \"string\",\n        \"restrictReasonType\": \"string\",\n        \"title\": \"string\"\n      },\n      \"links\": [\n        {\n          \"self\": \"http://gUthgJgaJxmRAeiQGjLVmIufmaXQkn.naMovvuv96WSNwJjfdsl\"\n        },\n        {\n          \"self\": \"https://rvlsrdypOylnFusXIfMWg.bbuLTg1O.FSkRiZzvrTesVDxexKx6ItfrGkvfMT,iOvHZfzTz7uJ9TUQ?ka=hz&umtu=E&evhpzh&\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d2a6986-c9be-4e60-a0b1-b3a21832484b",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "attachments"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) ID of comment to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 7301,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 1855,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a447abd-09bd-4a1e-ad4f-a50225a8637a",
+              "name": "API key is missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "attachments"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) ID of comment to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 7301,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 1855,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7ee7e23-2c23-49f1-9738-311136414bc9",
+              "name": "Document not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "comments",
+                    ":commentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "attachments"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "commentId",
+                      "description": "(Required) ID of comment to return"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": 7301,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    },\n    {\n      \"status\": 1855,\n      \"title\": \"string\",\n      \"detail\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.regulations.gov/v4",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "58b50a37-07b2-4731-9037-5d419f387190",
+    "name": "Regulations.gov comment submission utilities comments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.\n\nContact Support:\n Name: Regulations.gov Support\n Email: eRulemaking@gsa.gov",
+      "type": "text/plain"
+    }
+  }
+}
