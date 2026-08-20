@@ -47,6 +47,8 @@ apis:
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
   tags:
+  - Comments
+  tags_raw:
   - comments
   properties:
   - type: OpenAPI
@@ -59,6 +61,8 @@ apis:
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
   tags:
+  - Dockets
+  tags_raw:
   - dockets
   properties:
   - type: OpenAPI
@@ -71,6 +75,8 @@ apis:
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
   tags:
+  - Documents
+  tags_raw:
   - documents
   properties:
   - type: OpenAPI
