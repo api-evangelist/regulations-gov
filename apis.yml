@@ -96,6 +96,9 @@ apis:
   - type: Documentation
     url: https://open.gsa.gov/api/regulationsgov/
 common:
+  - type: CapabilityMap
+    url: capabilities/regulations-gov-capability-edges.yml
+    name: Regulations.gov Business Capability Map
   - type: AgenticAccess
     url: agentic-access/regulations-gov-agentic-access.yml
   - type: DomainSecurity
