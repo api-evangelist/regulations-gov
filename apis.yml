@@ -73,7 +73,7 @@ apis:
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
   tags:
-  - Dockets
+  - dockets
   tags_raw:
   - dockets
   properties:
