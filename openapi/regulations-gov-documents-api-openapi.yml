@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Regulations.gov comment submission utilities documents API
+  title: Regulations.gov Documents API
   description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
   version: '4.0'
   contact:
@@ -14,7 +14,7 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: documents
+- name: Documents
   description: Federal regulatory documents including notices, rules, and proposed rules
 paths:
   /documents:
@@ -22,7 +22,7 @@ paths:
       summary: List of documents
       description: This endpoint returns list of documents
       tags:
-      - documents
+      - Documents
       parameters:
       - name: filter[agencyId]
         in: query
@@ -124,10 +124,12 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/JSONError'
+      operationId: getDocuments
+      x-operation-id-source: derived
   /documents/{documentId}:
     get:
       tags:
-      - documents
+      - Documents
       summary: Get detailed information for specified documentId
       description: Gets the detailed information of a specific document with the passed documentId.
       parameters:
@@ -169,20 +171,315 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/JSONError'
+      operationId: getDocumentsByDocumentId
+      x-operation-id-source: derived
 components:
   schemas:
-    FileFormat:
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    DocumentFindAllItem:
+      description: A JSON:API document which represents a single document in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `documentId`
+          type: string
+        type:
+          description: The JSON:API resource type `documents`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Document'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    JSONError:
+      description: A JSON:API error document
       type: object
       properties:
-        fileUrl:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    DocumentFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of documents where each document is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/DocumentFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
+    RelationshipLinks:
+      description: Relationship links to other related resources (`attachments`)
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+        related:
+          $ref: '#/components/schemas/Link'
+      additionalProperties: false
+    Relationship:
+      description: A single relationship object
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipToAttachment'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+      additionalProperties: false
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
+    BasicDetailModel:
+      type: object
+      properties:
+        address1:
+          type:
+          - string
+          - 'null'
+          description: The first line of the submitter's address.
+        address2:
+          type:
+          - string
+          - 'null'
+          description: The second line of the submitter's address.
+        agencyId:
           type: string
-          description: URL of the file on S3
-        format:
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        city:
+          type:
+          - string
+          - 'null'
+          description: The city associated with the submitter's address.
+        category:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific category allowing agencies to group comments according to their type.
+        comment:
           type: string
-          description: The format of the file such as `pdf`
-        size:
-          type: integer
-          description: The file size
+          description: The comment text associated with the comment submission.
+        country:
+          type:
+          - string
+          - 'null'
+          description: The country associated with the submitter's address.
+        docAbstract:
+          type: string
+          description: The detailed description of the document.
+        docketId:
+          type: string
+          description: The ID of the docket to which the document corresponds.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        email:
+          type:
+          - string
+          - 'null'
+          description: The submitter's e-mail address.
+        fax:
+          type:
+          - string
+          - 'null'
+          description: The submitter's fax number.
+        field1:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific field used for storing additional data with the document.
+        field2:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific field used for storing additional data with the document.
+        fileFormats:
+          type: array
+          description: list of file formats
+          items:
+            $ref: '#/components/schemas/FileFormat'
+        firstName:
+          type:
+          - string
+          - 'null'
+          description: The submitter's first name.
+        govAgency:
+          type:
+          - string
+          - 'null'
+          description: The name of the government agency that the submitter represents.
+        govAgencyType:
+          type:
+          - string
+          - 'null'
+          description: The type of government agency that the submitter represents.
+        lastName:
+          type:
+          - string
+          - 'null'
+          description: The submitter's last name.
+        legacyId:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific identifier that was given to the document in the legacy system.
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the document was last modified.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        openForComment:
+          type: boolean
+          description: Conveys if the document is open for commenting.
+        organization:
+          type:
+          - string
+          - 'null'
+          description: The organization that the submitter represents.
+        originalDocumentId:
+          type: string
+          description: The document ID that was assigned when first entered into the system.
+        pageCount:
+          type:
+          - string
+          - 'null'
+          description: Conveys the number of pages contained in the document.
+        phone:
+          type:
+          - string
+          - 'null'
+          description: The submitter's phone number.
+        postedDate:
+          type: string
+          format: date-time
+          description: The date that the document was posted by the agency to the system.
+        postmarkDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The postmark date of a document that was sent by mail.
+        reasonWithdrawn:
+          type:
+          - string
+          - 'null'
+          description: If the document is withdrawn, this field will state the reason.
+        receiveDate:
+          type: string
+          format: date-time
+          description: The date that the document was received by the agency.
+        restrictReason:
+          type: string
+          description: If the document is restricted, this field will state the reason.
+        restrictReasonType:
+          type: string
+          description: If the document is restricted, this field will state the type of restriction.
+        stateProvinceRegion:
+          type:
+          - string
+          - 'null'
+          description: The submitter's state, province or region.
+        subtype:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific attribute to further categorize a document beyond the documentType.
+        title:
+          type: string
+          description: The formal title of the document.
+        trackingNbr:
+          type: string
+          description: The tracking number of the submission.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn.
+        zip:
+          type: string
+          description: The zip associated with the submitter's address.
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    Document:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        commentEndDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that closes the period when public comments may be submitted on the document.
+        commentStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that begins the period when public comments may be submitted on the document.
+        docketId:
+          type: string
+          description: The ID of the docket to which the document corresponds.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        frDocNum:
+          type: string
+          description: The federal register document number of the document.
+        highlightedContent:
+          type:
+          - string
+          - 'null'
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date document was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        openForComment:
+          type: boolean
+          description: Conveys if the document is open for comment
+        postedDate:
+          type: string
+          description: The date that the document was posted by the agency to the system.
+        subtype:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
+        title:
+          type: string
+          description: The formal title of the document.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn
     FindAllResponseMetadata:
       description: Pagination metadata for list responses
       properties:
@@ -204,6 +501,39 @@ components:
           type: boolean
         lastPage:
           type: boolean
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    DocumentFindOneResponse:
+      description: A JSON:API document which represents a single document
+      type: object
+      properties:
+        id:
+          description: The JSON:API resource ID (documentId of the document)
+          type: string
+        type:
+          description: The JSON:API resource type `documents`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/DocumentDetail'
+        relationships:
+          $ref: '#/components/schemas/Relationship'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+        included:
+          description: The list of attachments included with the document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachmentFindAllItem'
     AttachmentFindAllItem:
       description: A JSON:API document which represents a single attachment in the list
       properties:
@@ -257,172 +587,6 @@ components:
         title:
           type: string
           description: The formal title of the attachment
-    DocumentFindAllItem:
-      description: A JSON:API document which represents a single document in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `documentId`
-          type: string
-        type:
-          description: The JSON:API resource type `documents`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Document'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
-    BasicDetailModel:
-      type: object
-      properties:
-        address1:
-          type: string
-          nullable: true
-          description: The first line of the submitter's address.
-        address2:
-          type: string
-          nullable: true
-          description: The second line of the submitter's address.
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the document.
-        city:
-          type: string
-          nullable: true
-          description: The city associated with the submitter's address.
-        category:
-          type: string
-          nullable: true
-          description: An agency-specific category allowing agencies to group comments according to their type.
-        comment:
-          type: string
-          description: The comment text associated with the comment submission.
-        country:
-          type: string
-          nullable: true
-          description: The country associated with the submitter's address.
-        docAbstract:
-          type: string
-          description: The detailed description of the document.
-        docketId:
-          type: string
-          description: The ID of the docket to which the document corresponds.
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        email:
-          type: string
-          nullable: true
-          description: The submitter's e-mail address.
-        fax:
-          type: string
-          nullable: true
-          description: The submitter's fax number.
-        field1:
-          type: string
-          nullable: true
-          description: An agency-specific field used for storing additional data with the document.
-        field2:
-          type: string
-          nullable: true
-          description: An agency-specific field used for storing additional data with the document.
-        fileFormats:
-          type: array
-          description: list of file formats
-          items:
-            $ref: '#/components/schemas/FileFormat'
-        firstName:
-          type: string
-          nullable: true
-          description: The submitter's first name.
-        govAgency:
-          type: string
-          nullable: true
-          description: The name of the government agency that the submitter represents.
-        govAgencyType:
-          type: string
-          nullable: true
-          description: The type of government agency that the submitter represents.
-        lastName:
-          type: string
-          nullable: true
-          description: The submitter's last name.
-        legacyId:
-          type: string
-          nullable: true
-          description: An agency-specific identifier that was given to the document in the legacy system.
-        modifyDate:
-          type: string
-          format: date-time
-          description: The date when the document was last modified.
-        objectId:
-          type: string
-          description: The internal ID of the document in our system.
-        openForComment:
-          type: boolean
-          description: Conveys if the document is open for commenting.
-        organization:
-          type: string
-          nullable: true
-          description: The organization that the submitter represents.
-        originalDocumentId:
-          type: string
-          description: The document ID that was assigned when first entered into the system.
-        pageCount:
-          type: string
-          nullable: true
-          description: Conveys the number of pages contained in the document.
-        phone:
-          type: string
-          nullable: true
-          description: The submitter's phone number.
-        postedDate:
-          type: string
-          format: date-time
-          description: The date that the document was posted by the agency to the system.
-        postmarkDate:
-          type: string
-          nullable: true
-          format: date-time
-          description: The postmark date of a document that was sent by mail.
-        reasonWithdrawn:
-          type: string
-          nullable: true
-          description: If the document is withdrawn, this field will state the reason.
-        receiveDate:
-          type: string
-          format: date-time
-          description: The date that the document was received by the agency.
-        restrictReason:
-          type: string
-          description: If the document is restricted, this field will state the reason.
-        restrictReasonType:
-          type: string
-          description: If the document is restricted, this field will state the type of restriction.
-        stateProvinceRegion:
-          type: string
-          nullable: true
-          description: The submitter's state, province or region.
-        subtype:
-          type: string
-          nullable: true
-          description: An agency-specific attribute to further categorize a document beyond the documentType.
-        title:
-          type: string
-          description: The formal title of the document.
-        trackingNbr:
-          type: string
-          description: The tracking number of the submission.
-        withdrawn:
-          type: boolean
-          description: Conveys if the document is withdrawn.
-        zip:
-          type: string
-          description: The zip associated with the submitter's address.
     DocumentDetail:
       allOf:
       - $ref: '#/components/schemas/BasicDetailModel'
@@ -431,8 +595,9 @@ components:
         - documentId
         properties:
           additionalRins:
-            type: array
-            nullable: true
+            type:
+            - array
+            - 'null'
             items:
               type: string
             description: One or more Regulatory Information Numbers (RINs) to which the document relates.
@@ -440,66 +605,79 @@ components:
             type: boolean
             description: Indicates whether the owning agency will accept comments on the document after the due date.
           authorDate:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             format: date-time
             description: The date that the authors wrote or published the document.
           authors:
-            type: array
-            nullable: true
+            type:
+            - array
+            - 'null'
             items:
               type: string
             description: The individual, organization, or group of collaborators that contributed to the creation of the document.
           cfrPart:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The Code of Federal Regulations (CFR) Citation applicable to the document.
           commentEndDate:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             format: date-time
             description: The date that closes the period when public comments may be submitted on the document.
           commentStartDate:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             format: date-time
             description: The date that begins the period when public comments may be submitted on the document.
           effectiveDate:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             format: date-time
             description: The date the document is put into effect.
           exhibitLocation:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The physical location of an exhibit to which a document refers.
           exhibitType:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The type of exhibit to which a document refers.
           frDocNum:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The unique identifier of a document originating in the Federal Register.
           frVolNum:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The Federal Register volume number where the document was published.
           implementationDate:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             format: date-time
             description: The date the document is to be implemented.
           openForComment:
             type: boolean
             description: Conveys if a document is open for comment.
           media:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The media in which the document is stored.
           ombApproval:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The control number assigned when approval is given by the Office of Management and Budget (OMB).
           paperLength:
             type: integer
@@ -508,174 +686,44 @@ components:
             type: integer
             description: When the document is in paper format, indicates the width of the paper.
           regWriterInstruction:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: Additional instructions provided by the writer of the regulation.
           sourceCitation:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The citation for the source that published the document.
           startEndPage:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The starting and ending pages where the document was published.
           subject:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The subject of the document.
           topics:
-            type: array
-            nullable: true
+            type:
+            - array
+            - 'null'
             items:
               type: string
             description: The principal topics to which the document pertains.
-    SelfLink:
-      description: Link to self
+    FileFormat:
       type: object
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
-    DocumentType:
-      type: string
-      description: type of document. This field is always returned in JSON response
-      enum:
-      - Notice
-      - Rule
-      - Proposed Rule
-      - Supporting & Related Material
-      - Other
-    DocumentFindOneResponse:
-      description: A JSON:API document which represents a single document
-      type: object
-      properties:
-        id:
-          description: The JSON:API resource ID (documentId of the document)
+        fileUrl:
           type: string
-        type:
-          description: The JSON:API resource type `documents`
+          description: URL of the file on S3
+        format:
           type: string
-        attributes:
-          $ref: '#/components/schemas/DocumentDetail'
-        relationships:
-          $ref: '#/components/schemas/Relationship'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-        included:
-          description: The list of attachments included with the document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/AttachmentFindAllItem'
-    DocumentFindAllResponse:
-      description: A JSON:API document with a list of resources
-      properties:
-        data:
-          description: The list of documents where each document is a JSON:API document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/DocumentFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
-    RelationshipToAttachment:
-      description: An array of attachment objects as relationship resources.
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          id:
-            type: string
-    Document:
-      type: object
-      properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the document.
-        commentEndDate:
-          type: string
-          nullable: true
-          format: date-time
-          description: The date that closes the period when public comments may be submitted on the document.
-        commentStartDate:
-          type: string
-          nullable: true
-          format: date-time
-          description: The date that begins the period when public comments may be submitted on the document.
-        docketId:
-          type: string
-          description: The ID of the docket to which the document corresponds.
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        frDocNum:
-          type: string
-          description: The federal register document number of the document.
-        highlightedContent:
-          type: string
-          nullable: true
-          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The date document was last modified in the system.
-        objectId:
-          type: string
-          description: The internal ID of the document in our system.
-        openForComment:
-          type: boolean
-          description: Conveys if the document is open for comment
-        postedDate:
-          type: string
-          description: The date that the document was posted by the agency to the system.
-        subtype:
-          type: string
-          nullable: true
-          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
-        title:
-          type: string
-          description: The formal title of the document.
-        withdrawn:
-          type: boolean
-          description: Conveys if the document is withdrawn
-    RelationshipLinks:
-      description: Relationship links to other related resources (`attachments`)
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/Link'
-        related:
-          $ref: '#/components/schemas/Link'
-      additionalProperties: false
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    Error:
-      type: object
-      properties:
-        status:
+          description: The format of the file such as `pdf`
+        size:
           type: integer
-        title:
-          type: string
-        detail:
-          type: string
-    Relationship:
-      description: A single relationship object
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipToAttachment'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-      additionalProperties: false
+          description: The file size
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

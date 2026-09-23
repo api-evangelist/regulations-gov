@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Regulations.gov comment submission utilities API
   description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
@@ -64,6 +64,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/JSONError'
+      operationId: getAgencyCategories
+      x-operation-id-source: derived
 components:
   schemas:
     JSONError:

@@ -1,10 +1,7 @@
 {
   "provider": "regulations-gov",
   "sources": [
-    "regulations-gov-comment-submission-utilities-api-openapi.yml",
-    "regulations-gov-comments-api-openapi.yml",
-    "regulations-gov-dockets-api-openapi.yml",
-    "regulations-gov-documents-api-openapi.yml"
+    "_original/regulations-gov-regulations-gov-api-openapi.yml"
   ],
   "outputs": [
     "regulations-gov-comment-submission-utilities-api-openapi.yml",
@@ -15,6 +12,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "regulations-gov-regulations-gov-api-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "regulations-gov-comment-submission-utilities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regulations-gov-comments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regulations-gov-dockets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "regulations-gov-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

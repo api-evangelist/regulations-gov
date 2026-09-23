@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Regulations.gov comment submission utilities dockets API
+  title: Regulations.gov Dockets API
   description: Public API for Regulations.gov — the US federal government's central portal for public participation in the rulemaking process. Provides programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
   version: '4.0'
   contact:
@@ -14,7 +14,7 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: dockets
+- name: Dockets
   description: Regulatory dockets grouping related documents
 paths:
   /dockets:
@@ -22,7 +22,7 @@ paths:
       summary: List of dockets
       description: This endpoint returns list of dockets
       tags:
-      - dockets
+      - Dockets
       parameters:
       - name: filter[agencyId]
         in: query
@@ -86,10 +86,12 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/JSONError'
+      operationId: getDockets
+      x-operation-id-source: derived
   /dockets/{docketId}:
     get:
       tags:
-      - dockets
+      - Dockets
       summary: Get detailed information for specified docketId
       description: Gets the detailed information of a specific docket with the passed docketId.
       parameters:
@@ -124,19 +126,30 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/JSONError'
+      operationId: getDocketsByDocketId
+      x-operation-id-source: derived
 components:
   schemas:
-    DocketFindAllResponse:
-      description: A JSON:API document with a list of resources
+    DocketType:
+      type: string
+      description: the type of docket
+      enum:
+      - Rulemaking
+      - Nonrulemaking
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    JSONError:
+      description: A JSON:API error document
+      type: object
       properties:
-        data:
-          description: The list of dockets where each docket is a JSON:API document
+        errors:
+          description: List of JSON:API Error
           type: array
-          uniqueItems: true
           items:
-            $ref: '#/components/schemas/DocketFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
+            $ref: '#/components/schemas/Error'
     FindAllResponseMetadata:
       description: Pagination metadata for list responses
       properties:
@@ -174,11 +187,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SelfLink'
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
     DocketFindAllItem:
       description: A JSON:API document which represents a single docket in the list
       properties:
@@ -194,85 +208,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SelfLink'
-    DocketDetail:
+    Error:
       type: object
       properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the docket.
-        category:
-          type: string
-          nullable: true
-          description: Agency specific docket category providing regulatory action details, status, and the agency program and or office.
-        dkAbstract:
-          type: string
-          description: The detailed description of the docket.
-        docketType:
-          $ref: '#/components/schemas/DocketType'
-        effectiveDate:
-          type: string
-          format: date-time
-          description: The date the docket is put into effect.
-        field1:
-          type: string
-          nullable: true
-          description: An agency-specific field used for storing additional data with the docket.
-        field2:
-          type: string
-          nullable: true
-          description: An agency-specific field used for storing additional data with the docket.
-        generic:
-          type: string
-          nullable: true
-          description: An agency-specific field used for storing additional data with the docket.
-        keywords:
-          type: array
-          nullable: true
-          items:
-            type: string
-            description: Agency selected keywords associated with a docket to improve its searchability by the public.
-        legacyId:
-          type: string
-          nullable: true
-          description: An agency-specific identifier that was given to the docket in the legacy system.
-        modifyDate:
-          type: string
-          format: date-time
-          description: The date when the docket was last modified.
-        objectId:
-          type: string
-          description: The internal ID of the document in our system.
-        organization:
-          type: string
-          nullable: true
-          description: Identifies docket's (a regulatory action) originating agency and/or department.
-        petitionNbr:
-          type: string
-          nullable: true
-          description: Agency specific identifier associated with a docket.
-        program:
-          type: string
-          nullable: true
-          description: The agency specific program associated with the docket.
-        rin:
-          type: string
-          nullable: true
-          description: OMB issued Regulation Identifier Number (RIN) uniquely identifies a docket and its documents.
-        shortTitle:
-          type: string
-          nullable: true
-          description: A combination of letters and or numbers assigned to an agency's regulatory action for purposes of brevity.
-        subType:
-          type: string
-          nullable: true
-          description: This agency specific attribute characterizes a docket (regulatory action) beyond its assigned docket type.
-        subType2:
-          type: string
-          nullable: true
-          description: This agency specific attribute characterizes a docket (regulatory action) beyond the designated docket subtype.
+        status:
+          type: integer
         title:
           type: string
-          description: A name or descriptive heading given to an agency's docket.
+        detail:
+          type: string
+    DocketFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of dockets where each docket is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/DocketFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
     Docket:
       type: object
       properties:
@@ -282,8 +237,9 @@ components:
         docketType:
           $ref: '#/components/schemas/DocketType'
         highlightedContent:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
         lastModifiedDate:
           type: string
@@ -295,36 +251,98 @@ components:
         title:
           type: string
           description: The formal title of the docket.
-    SelfLink:
-      description: Link to self
+    DocketDetail:
       type: object
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the docket.
+        category:
+          type:
+          - string
+          - 'null'
+          description: Agency specific docket category providing regulatory action details, status, and the agency program and or office.
+        dkAbstract:
+          type: string
+          description: The detailed description of the docket.
+        docketType:
+          $ref: '#/components/schemas/DocketType'
+        effectiveDate:
+          type: string
+          format: date-time
+          description: The date the docket is put into effect.
+        field1:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific field used for storing additional data with the docket.
+        field2:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific field used for storing additional data with the docket.
+        generic:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific field used for storing additional data with the docket.
+        keywords:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/Error'
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
+            type: string
+            description: Agency selected keywords associated with a docket to improve its searchability by the public.
+        legacyId:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific identifier that was given to the docket in the legacy system.
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the docket was last modified.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        organization:
+          type:
+          - string
+          - 'null'
+          description: Identifies docket's (a regulatory action) originating agency and/or department.
+        petitionNbr:
+          type:
+          - string
+          - 'null'
+          description: Agency specific identifier associated with a docket.
+        program:
+          type:
+          - string
+          - 'null'
+          description: The agency specific program associated with the docket.
+        rin:
+          type:
+          - string
+          - 'null'
+          description: OMB issued Regulation Identifier Number (RIN) uniquely identifies a docket and its documents.
+        shortTitle:
+          type:
+          - string
+          - 'null'
+          description: A combination of letters and or numbers assigned to an agency's regulatory action for purposes of brevity.
+        subType:
+          type:
+          - string
+          - 'null'
+          description: This agency specific attribute characterizes a docket (regulatory action) beyond its assigned docket type.
+        subType2:
+          type:
+          - string
+          - 'null'
+          description: This agency specific attribute characterizes a docket (regulatory action) beyond the designated docket subtype.
         title:
           type: string
-        detail:
-          type: string
-    DocketType:
-      type: string
-      description: the type of docket
-      enum:
-      - Rulemaking
-      - Nonrulemaking
+          description: A name or descriptive heading given to an agency's docket.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
