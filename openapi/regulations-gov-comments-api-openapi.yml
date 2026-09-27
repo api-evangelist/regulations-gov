@@ -143,89 +143,19 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DocumentType:
-      type: string
-      description: type of document. This field is always returned in JSON response
-      enum:
-      - Notice
-      - Rule
-      - Proposed Rule
-      - Supporting & Related Material
-      - Other
-    CommentFindOneResponse:
-      description: A JSON:API document which represents a single comment
-      type: object
-      properties:
-        id:
-          description: The JSON:API resource ID (documentId of the comment).
-          type: string
-        type:
-          description: The JSON:API resource type `comments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/CommentDetail'
-        relationships:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relationship'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-        included:
-          description: The list of attachments included with the comment
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/AttachmentFindAllItem'
     Link:
       description: A string containing the link URL.
       type: string
       format: uri-reference
       uniqueItems: true
-    CommentFindAllResponse:
-      description: A JSON:API document with a list of resources
-      properties:
-        data:
-          description: The list of comments where each comment is a JSON:API document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/CommentFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
-    JSONError:
-      description: A JSON:API error document
+    RelationshipLinks:
+      description: Relationship links to other related resources (`attachments`)
       type: object
       properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    CommentFindAllItem:
-      description: A JSON:API document which represents a single comment in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `documentId`
-          type: string
-        type:
-          description: The JSON:API resource type `comments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Comment'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    Relationship:
-      description: A single relationship object
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipToAttachment'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
+        self:
+          $ref: '#/components/schemas/Link'
+        related:
+          $ref: '#/components/schemas/Link'
       additionalProperties: false
     BasicDetailModel:
       type: object
@@ -394,31 +324,65 @@ components:
         zip:
           type: string
           description: The zip associated with the submitter's address.
-    RelationshipLinks:
-      description: Relationship links to other related resources (`attachments`)
+    CommentFindOneResponse:
+      description: A JSON:API document which represents a single comment
       type: object
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
-        related:
-          $ref: '#/components/schemas/Link'
+        id:
+          description: The JSON:API resource ID (documentId of the comment).
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/CommentDetail'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+        included:
+          description: The list of attachments included with the comment
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachmentFindAllItem'
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Relationship:
+      description: A single relationship object
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipToAttachment'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
       additionalProperties: false
-    RelationshipToAttachment:
-      description: An array of attachment objects as relationship resources.
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          id:
-            type: string
-    SelfLink:
-      description: Link to self
-      type: object
+    AttachmentFindAllItem:
+      description: A JSON:API document which represents a single attachment in the list
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
+        id:
+          description: The JSON:API resource ID `attachmentId`
+          type: string
+        type:
+          description: The JSON:API resource type `attachments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Attachment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
     FindAllResponseMetadata:
       description: Pagination metadata for list responses
       properties:
@@ -440,6 +404,66 @@ components:
           type: boolean
         lastPage:
           type: boolean
+    CommentFindAllItem:
+      description: A JSON:API document which represents a single comment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `documentId`
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Comment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    CommentFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of comments where each comment is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/CommentFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
+    FileFormat:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          description: URL of the file on S3
+        format:
+          type: string
+          description: The format of the file such as `pdf`
+        size:
+          type: integer
+          description: The file size
+    CommentDetail:
+      allOf:
+      - $ref: '#/components/schemas/BasicDetailModel'
+      - type: object
+        required:
+        - documentId
+        properties:
+          commentOnDocumentId:
+            type: string
+            description: documentId of the parent document.
+          duplicateComments:
+            type: integer
+            description: Number of duplicate comments
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
     Comment:
       type: object
       properties:
@@ -469,43 +493,6 @@ components:
         withdrawn:
           type: boolean
           description: Conveys if the document is withdrawn
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
-    CommentDetail:
-      allOf:
-      - $ref: '#/components/schemas/BasicDetailModel'
-      - type: object
-        required:
-        - documentId
-        properties:
-          commentOnDocumentId:
-            type: string
-            description: documentId of the parent document.
-          duplicateComments:
-            type: integer
-            description: Number of duplicate comments
-    AttachmentFindAllItem:
-      description: A JSON:API document which represents a single attachment in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `attachmentId`
-          type: string
-        type:
-          description: The JSON:API resource type `attachments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Attachment'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
     Attachment:
       type: object
       properties:
@@ -544,18 +531,31 @@ components:
         title:
           type: string
           description: The formal title of the attachment
-    FileFormat:
+    SelfLink:
+      description: Link to self
       type: object
       properties:
-        fileUrl:
-          type: string
-          description: URL of the file on S3
-        format:
-          type: string
-          description: The format of the file such as `pdf`
-        size:
-          type: integer
-          description: The file size
+        self:
+          $ref: '#/components/schemas/Link'
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

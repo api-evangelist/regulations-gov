@@ -41,6 +41,7 @@ tags:
   - Dockets
   - GSA
   - Open Data
+  - Government Data
 apis:
 - aid: regulations-gov:regulations-gov-comment-submission-utilities-api
   name: Regulations.gov comment submission utilities API
@@ -55,7 +56,7 @@ apis:
   - type: Documentation
     url: https://open.gsa.gov/api/regulationsgov/
 - aid: regulations-gov:regulations-gov-comments-api
-  name: Regulations.gov comments API
+  name: Regulations.gov Comments API
   description: Public comments submitted on regulatory documents
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
@@ -69,7 +70,7 @@ apis:
   - type: Documentation
     url: https://open.gsa.gov/api/regulationsgov/
 - aid: regulations-gov:regulations-gov-dockets-api
-  name: Regulations.gov dockets API
+  name: Regulations.gov Dockets API
   description: Regulatory dockets grouping related documents
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
@@ -83,7 +84,7 @@ apis:
   - type: Documentation
     url: https://open.gsa.gov/api/regulationsgov/
 - aid: regulations-gov:regulations-gov-documents-api
-  name: Regulations.gov documents API
+  name: Regulations.gov Documents API
   description: Federal regulatory documents including notices, rules, and proposed rules
   humanURL: https://open.gsa.gov/api/regulationsgov/
   baseURL: https://api.regulations.gov
