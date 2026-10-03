@@ -175,6 +175,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DocumentFindAllItem:
+      description: A JSON:API document which represents a single document in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `documentId`
+          type: string
+        type:
+          description: The JSON:API resource type `documents`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Document'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
     DocumentFindAllResponse:
       description: A JSON:API document with a list of resources
       properties:
@@ -186,11 +201,21 @@ components:
             $ref: '#/components/schemas/DocumentFindAllItem'
         meta:
           $ref: '#/components/schemas/FindAllResponseMetadata'
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
     DocumentFindOneResponse:
       description: A JSON:API document which represents a single document
       type: object
@@ -215,6 +240,30 @@ components:
           uniqueItems: true
           items:
             $ref: '#/components/schemas/AttachmentFindAllItem'
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
     RelationshipLinks:
       description: Relationship links to other related resources (`attachments`)
       type: object
@@ -224,6 +273,260 @@ components:
         related:
           $ref: '#/components/schemas/Link'
       additionalProperties: false
+    AttachmentFindAllItem:
+      description: A JSON:API document which represents a single attachment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `attachmentId`
+          type: string
+        type:
+          description: The JSON:API resource type `attachments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Attachment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    FindAllResponseMetadata:
+      description: Pagination metadata for list responses
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        numberOfElements:
+          type: integer
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        firstPage:
+          type: boolean
+        lastPage:
+          type: boolean
+    DocumentDetail:
+      allOf:
+      - $ref: '#/components/schemas/BasicDetailModel'
+      - type: object
+        required:
+        - documentId
+        properties:
+          additionalRins:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+            description: One or more Regulatory Information Numbers (RINs) to which the document relates.
+          allowLateComments:
+            type: boolean
+            description: Indicates whether the owning agency will accept comments on the document after the due date.
+          authorDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The date that the authors wrote or published the document.
+          authors:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+            description: The individual, organization, or group of collaborators that contributed to the creation of the document.
+          cfrPart:
+            type:
+            - string
+            - 'null'
+            description: The Code of Federal Regulations (CFR) Citation applicable to the document.
+          commentEndDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The date that closes the period when public comments may be submitted on the document.
+          commentStartDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The date that begins the period when public comments may be submitted on the document.
+          effectiveDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The date the document is put into effect.
+          exhibitLocation:
+            type:
+            - string
+            - 'null'
+            description: The physical location of an exhibit to which a document refers.
+          exhibitType:
+            type:
+            - string
+            - 'null'
+            description: The type of exhibit to which a document refers.
+          frDocNum:
+            type:
+            - string
+            - 'null'
+            description: The unique identifier of a document originating in the Federal Register.
+          frVolNum:
+            type:
+            - string
+            - 'null'
+            description: The Federal Register volume number where the document was published.
+          implementationDate:
+            type:
+            - string
+            - 'null'
+            format: date-time
+            description: The date the document is to be implemented.
+          openForComment:
+            type: boolean
+            description: Conveys if a document is open for comment.
+          media:
+            type:
+            - string
+            - 'null'
+            description: The media in which the document is stored.
+          ombApproval:
+            type:
+            - string
+            - 'null'
+            description: The control number assigned when approval is given by the Office of Management and Budget (OMB).
+          paperLength:
+            type: integer
+            description: When the document is in paper format, indicates the length of the paper.
+          paperWidth:
+            type: integer
+            description: When the document is in paper format, indicates the width of the paper.
+          regWriterInstruction:
+            type:
+            - string
+            - 'null'
+            description: Additional instructions provided by the writer of the regulation.
+          sourceCitation:
+            type:
+            - string
+            - 'null'
+            description: The citation for the source that published the document.
+          startEndPage:
+            type:
+            - string
+            - 'null'
+            description: The starting and ending pages where the document was published.
+          subject:
+            type:
+            - string
+            - 'null'
+            description: The subject of the document.
+          topics:
+            type:
+            - array
+            - 'null'
+            items:
+              type: string
+            description: The principal topics to which the document pertains.
+    Document:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        commentEndDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that closes the period when public comments may be submitted on the document.
+        commentStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that begins the period when public comments may be submitted on the document.
+        docketId:
+          type: string
+          description: The ID of the docket to which the document corresponds.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        frDocNum:
+          type: string
+          description: The federal register document number of the document.
+        highlightedContent:
+          type:
+          - string
+          - 'null'
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date document was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        openForComment:
+          type: boolean
+          description: Conveys if the document is open for comment
+        postedDate:
+          type: string
+          description: The date that the document was posted by the agency to the system.
+        subtype:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
+        title:
+          type: string
+          description: The formal title of the document.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn
+    Attachment:
+      type: object
+      properties:
+        agencyNote:
+          type: string
+          description: The note by agency
+        authors:
+          type: array
+          items:
+            type: string
+          description: The individual, organization, or group of collaborators that contributed to the creation of the attachment.
+        docAbstract:
+          type: string
+          description: The detailed description of the attachment.
+        docOrder:
+          type: integer
+          description: The order of the attachment
+        fileFormats:
+          type: array
+          description: list of file formats
+          items:
+            $ref: '#/components/schemas/FileFormat'
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the attachment was last modified.
+        publication:
+          type: string
+          description: The publication date
+        restrictReason:
+          type: string
+          description: If the attachment is restricted, this field will state the reason.
+        restrictReasonType:
+          type: string
+          description: If the attachment is restricted, this field will state the type of restriction.
+        title:
+          type: string
+          description: The formal title of the attachment
     BasicDetailModel:
       type: object
       properties:
@@ -391,70 +694,6 @@ components:
         zip:
           type: string
           description: The zip associated with the submitter's address.
-    Document:
-      type: object
-      properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the document.
-        commentEndDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date that closes the period when public comments may be submitted on the document.
-        commentStartDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date that begins the period when public comments may be submitted on the document.
-        docketId:
-          type: string
-          description: The ID of the docket to which the document corresponds.
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        frDocNum:
-          type: string
-          description: The federal register document number of the document.
-        highlightedContent:
-          type:
-          - string
-          - 'null'
-          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The date document was last modified in the system.
-        objectId:
-          type: string
-          description: The internal ID of the document in our system.
-        openForComment:
-          type: boolean
-          description: Conveys if the document is open for comment
-        postedDate:
-          type: string
-          description: The date that the document was posted by the agency to the system.
-        subtype:
-          type:
-          - string
-          - 'null'
-          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
-        title:
-          type: string
-          description: The formal title of the document.
-        withdrawn:
-          type: boolean
-          description: Conveys if the document is withdrawn
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
     Relationship:
       description: A single relationship object
       type: object
@@ -464,42 +703,15 @@ components:
         links:
           $ref: '#/components/schemas/RelationshipLinks'
       additionalProperties: false
-    AttachmentFindAllItem:
-      description: A JSON:API document which represents a single attachment in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `attachmentId`
-          type: string
-        type:
-          description: The JSON:API resource type `attachments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Attachment'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    FindAllResponseMetadata:
-      description: Pagination metadata for list responses
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        numberOfElements:
-          type: integer
-        pageNumber:
-          type: integer
-        pageSize:
-          type: integer
-        totalElements:
-          type: integer
-        totalPages:
-          type: integer
-        firstPage:
-          type: boolean
-        lastPage:
-          type: boolean
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
     FileFormat:
       type: object
       properties:
@@ -512,218 +724,6 @@ components:
         size:
           type: integer
           description: The file size
-    DocumentDetail:
-      allOf:
-      - $ref: '#/components/schemas/BasicDetailModel'
-      - type: object
-        required:
-        - documentId
-        properties:
-          additionalRins:
-            type:
-            - array
-            - 'null'
-            items:
-              type: string
-            description: One or more Regulatory Information Numbers (RINs) to which the document relates.
-          allowLateComments:
-            type: boolean
-            description: Indicates whether the owning agency will accept comments on the document after the due date.
-          authorDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The date that the authors wrote or published the document.
-          authors:
-            type:
-            - array
-            - 'null'
-            items:
-              type: string
-            description: The individual, organization, or group of collaborators that contributed to the creation of the document.
-          cfrPart:
-            type:
-            - string
-            - 'null'
-            description: The Code of Federal Regulations (CFR) Citation applicable to the document.
-          commentEndDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The date that closes the period when public comments may be submitted on the document.
-          commentStartDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The date that begins the period when public comments may be submitted on the document.
-          effectiveDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The date the document is put into effect.
-          exhibitLocation:
-            type:
-            - string
-            - 'null'
-            description: The physical location of an exhibit to which a document refers.
-          exhibitType:
-            type:
-            - string
-            - 'null'
-            description: The type of exhibit to which a document refers.
-          frDocNum:
-            type:
-            - string
-            - 'null'
-            description: The unique identifier of a document originating in the Federal Register.
-          frVolNum:
-            type:
-            - string
-            - 'null'
-            description: The Federal Register volume number where the document was published.
-          implementationDate:
-            type:
-            - string
-            - 'null'
-            format: date-time
-            description: The date the document is to be implemented.
-          openForComment:
-            type: boolean
-            description: Conveys if a document is open for comment.
-          media:
-            type:
-            - string
-            - 'null'
-            description: The media in which the document is stored.
-          ombApproval:
-            type:
-            - string
-            - 'null'
-            description: The control number assigned when approval is given by the Office of Management and Budget (OMB).
-          paperLength:
-            type: integer
-            description: When the document is in paper format, indicates the length of the paper.
-          paperWidth:
-            type: integer
-            description: When the document is in paper format, indicates the width of the paper.
-          regWriterInstruction:
-            type:
-            - string
-            - 'null'
-            description: Additional instructions provided by the writer of the regulation.
-          sourceCitation:
-            type:
-            - string
-            - 'null'
-            description: The citation for the source that published the document.
-          startEndPage:
-            type:
-            - string
-            - 'null'
-            description: The starting and ending pages where the document was published.
-          subject:
-            type:
-            - string
-            - 'null'
-            description: The subject of the document.
-          topics:
-            type:
-            - array
-            - 'null'
-            items:
-              type: string
-            description: The principal topics to which the document pertains.
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
-    Attachment:
-      type: object
-      properties:
-        agencyNote:
-          type: string
-          description: The note by agency
-        authors:
-          type: array
-          items:
-            type: string
-          description: The individual, organization, or group of collaborators that contributed to the creation of the attachment.
-        docAbstract:
-          type: string
-          description: The detailed description of the attachment.
-        docOrder:
-          type: integer
-          description: The order of the attachment
-        fileFormats:
-          type: array
-          description: list of file formats
-          items:
-            $ref: '#/components/schemas/FileFormat'
-        modifyDate:
-          type: string
-          format: date-time
-          description: The date when the attachment was last modified.
-        publication:
-          type: string
-          description: The publication date
-        restrictReason:
-          type: string
-          description: If the attachment is restricted, this field will state the reason.
-        restrictReasonType:
-          type: string
-          description: If the attachment is restricted, this field will state the type of restriction.
-        title:
-          type: string
-          description: The formal title of the attachment
-    SelfLink:
-      description: Link to self
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/Link'
-    DocumentFindAllItem:
-      description: A JSON:API document which represents a single document in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `documentId`
-          type: string
-        type:
-          description: The JSON:API resource type `documents`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Document'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    RelationshipToAttachment:
-      description: An array of attachment objects as relationship resources.
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          id:
-            type: string
-    DocumentType:
-      type: string
-      description: type of document. This field is always returned in JSON response
-      enum:
-      - Notice
-      - Rule
-      - Proposed Rule
-      - Supporting & Related Material
-      - Other
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

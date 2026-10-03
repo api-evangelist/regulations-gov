@@ -68,15 +68,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
     Error:
       type: object
       properties:
@@ -86,6 +77,15 @@ components:
           type: string
         detail:
           type: string
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
