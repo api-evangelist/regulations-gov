@@ -130,21 +130,29 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SelfLink:
-      description: Link to self
+    Docket:
       type: object
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the docket.
+        docketType:
+          $ref: '#/components/schemas/DocketType'
+        highlightedContent:
+          type:
+          - string
+          - 'null'
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date docket was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the docket in our system.
+        title:
+          type: string
+          description: The formal title of the docket.
     DocketFindOneResponse:
       description: A JSON:API document which represents a single docket
       type: object
@@ -161,6 +169,88 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SelfLink'
+    DocketType:
+      type: string
+      description: the type of docket
+      enum:
+      - Rulemaking
+      - Nonrulemaking
+    DocketFindAllItem:
+      description: A JSON:API document which represents a single docket in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `docketId`
+          type: string
+        type:
+          description: The JSON:API resource type `dockets`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Docket'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    FindAllResponseMetadata:
+      description: Pagination metadata for list responses
+      properties:
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+        numberOfElements:
+          type: integer
+        pageNumber:
+          type: integer
+        pageSize:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        firstPage:
+          type: boolean
+        lastPage:
+          type: boolean
+    DocketFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of dockets where each docket is a JSON:API document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/DocketFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
     DocketDetail:
       type: object
       properties:
@@ -253,96 +343,6 @@ components:
         title:
           type: string
           description: A name or descriptive heading given to an agency's docket.
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
-    Error:
-      type: object
-      properties:
-        status:
-          type: integer
-        title:
-          type: string
-        detail:
-          type: string
-    Docket:
-      type: object
-      properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the docket.
-        docketType:
-          $ref: '#/components/schemas/DocketType'
-        highlightedContent:
-          type:
-          - string
-          - 'null'
-          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The date docket was last modified in the system.
-        objectId:
-          type: string
-          description: The internal ID of the docket in our system.
-        title:
-          type: string
-          description: The formal title of the docket.
-    FindAllResponseMetadata:
-      description: Pagination metadata for list responses
-      properties:
-        hasNextPage:
-          type: boolean
-        hasPreviousPage:
-          type: boolean
-        numberOfElements:
-          type: integer
-        pageNumber:
-          type: integer
-        pageSize:
-          type: integer
-        totalElements:
-          type: integer
-        totalPages:
-          type: integer
-        firstPage:
-          type: boolean
-        lastPage:
-          type: boolean
-    DocketFindAllItem:
-      description: A JSON:API document which represents a single docket in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `docketId`
-          type: string
-        type:
-          description: The JSON:API resource type `dockets`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Docket'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    DocketFindAllResponse:
-      description: A JSON:API document with a list of resources
-      properties:
-        data:
-          description: The list of dockets where each docket is a JSON:API document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/DocketFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
-    DocketType:
-      type: string
-      description: the type of docket
-      enum:
-      - Rulemaking
-      - Nonrulemaking
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

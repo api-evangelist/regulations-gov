@@ -143,97 +143,36 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CommentDetail:
-      allOf:
-      - $ref: '#/components/schemas/BasicDetailModel'
-      - type: object
-        required:
-        - documentId
-        properties:
-          commentOnDocumentId:
-            type: string
-            description: documentId of the parent document.
-          duplicateComments:
-            type: integer
-            description: Number of duplicate comments
-    SelfLink:
-      description: Link to self
+    FileFormat:
       type: object
       properties:
-        self:
-          $ref: '#/components/schemas/Link'
-    JSONError:
-      description: A JSON:API error document
-      type: object
-      properties:
-        errors:
-          description: List of JSON:API Error
-          type: array
-          items:
-            $ref: '#/components/schemas/Error'
-    RelationshipToAttachment:
-      description: An array of attachment objects as relationship resources.
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          id:
-            type: string
-    RelationshipLinks:
-      description: Relationship links to other related resources (`attachments`)
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/Link'
-        related:
-          $ref: '#/components/schemas/Link'
-      additionalProperties: false
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
-    CommentFindAllItem:
-      description: A JSON:API document which represents a single comment in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `documentId`
+        fileUrl:
           type: string
-        type:
-          description: The JSON:API resource type `comments`
+          description: URL of the file on S3
+        format:
           type: string
-        attributes:
-          $ref: '#/components/schemas/Comment'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    Error:
-      type: object
-      properties:
-        status:
+          description: The format of the file such as `pdf`
+        size:
           type: integer
-        title:
-          type: string
-        detail:
-          type: string
-    AttachmentFindAllItem:
-      description: A JSON:API document which represents a single attachment in the list
+          description: The file size
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
+    Relationship:
+      description: A single relationship object
+      type: object
       properties:
-        id:
-          description: The JSON:API resource ID `attachmentId`
-          type: string
-        type:
-          description: The JSON:API resource type `attachments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Attachment'
+        data:
+          $ref: '#/components/schemas/RelationshipToAttachment'
         links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
+          $ref: '#/components/schemas/RelationshipLinks'
+      additionalProperties: false
     FindAllResponseMetadata:
       description: Pagination metadata for list responses
       properties:
@@ -255,17 +194,6 @@ components:
           type: boolean
         lastPage:
           type: boolean
-    CommentFindAllResponse:
-      description: A JSON:API document with a list of resources
-      properties:
-        data:
-          description: The list of comments where each comment is a JSON:API document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/CommentFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
     Attachment:
       type: object
       properties:
@@ -304,6 +232,152 @@ components:
         title:
           type: string
           description: The formal title of the attachment
+    Comment:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        highlightedContent:
+          type:
+          - string
+          - 'null'
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date comment was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the comment in our system.
+        postedDate:
+          type: string
+          description: The date that the document was posted by the agency to the system.
+        title:
+          type: string
+          description: The formal title of the document.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    CommentFindAllItem:
+      description: A JSON:API document which represents a single comment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `documentId`
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Comment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    JSONError:
+      description: A JSON:API error document
+      type: object
+      properties:
+        errors:
+          description: List of JSON:API Error
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+    CommentDetail:
+      allOf:
+      - $ref: '#/components/schemas/BasicDetailModel'
+      - type: object
+        required:
+        - documentId
+        properties:
+          commentOnDocumentId:
+            type: string
+            description: documentId of the parent document.
+          duplicateComments:
+            type: integer
+            description: Number of duplicate comments
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    CommentFindOneResponse:
+      description: A JSON:API document which represents a single comment
+      type: object
+      properties:
+        id:
+          description: The JSON:API resource ID (documentId of the comment).
+          type: string
+        type:
+          description: The JSON:API resource type `comments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/CommentDetail'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+        included:
+          description: The list of attachments included with the comment
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachmentFindAllItem'
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    RelationshipLinks:
+      description: Relationship links to other related resources (`attachments`)
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+        related:
+          $ref: '#/components/schemas/Link'
+      additionalProperties: false
+    AttachmentFindAllItem:
+      description: A JSON:API document which represents a single attachment in the list
+      properties:
+        id:
+          description: The JSON:API resource ID `attachmentId`
+          type: string
+        type:
+          description: The JSON:API resource type `attachments`
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Attachment'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
     BasicDetailModel:
       type: object
       properties:
@@ -471,91 +545,17 @@ components:
         zip:
           type: string
           description: The zip associated with the submitter's address.
-    Relationship:
-      description: A single relationship object
-      type: object
+    CommentFindAllResponse:
+      description: A JSON:API document with a list of resources
       properties:
         data:
-          $ref: '#/components/schemas/RelationshipToAttachment'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-      additionalProperties: false
-    Comment:
-      type: object
-      properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the document.
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        highlightedContent:
-          type:
-          - string
-          - 'null'
-          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The date comment was last modified in the system.
-        objectId:
-          type: string
-          description: The internal ID of the comment in our system.
-        postedDate:
-          type: string
-          description: The date that the document was posted by the agency to the system.
-        title:
-          type: string
-          description: The formal title of the document.
-        withdrawn:
-          type: boolean
-          description: Conveys if the document is withdrawn
-    DocumentType:
-      type: string
-      description: type of document. This field is always returned in JSON response
-      enum:
-      - Notice
-      - Rule
-      - Proposed Rule
-      - Supporting & Related Material
-      - Other
-    FileFormat:
-      type: object
-      properties:
-        fileUrl:
-          type: string
-          description: URL of the file on S3
-        format:
-          type: string
-          description: The format of the file such as `pdf`
-        size:
-          type: integer
-          description: The file size
-    CommentFindOneResponse:
-      description: A JSON:API document which represents a single comment
-      type: object
-      properties:
-        id:
-          description: The JSON:API resource ID (documentId of the comment).
-          type: string
-        type:
-          description: The JSON:API resource type `comments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/CommentDetail'
-        relationships:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relationship'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-        included:
-          description: The list of attachments included with the comment
+          description: The list of comments where each comment is a JSON:API document
           type: array
           uniqueItems: true
           items:
-            $ref: '#/components/schemas/AttachmentFindAllItem'
+            $ref: '#/components/schemas/CommentFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
