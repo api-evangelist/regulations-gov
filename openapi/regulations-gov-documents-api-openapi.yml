@@ -175,30 +175,130 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DocumentFindOneResponse:
-      description: A JSON:API document which represents a single document
-      type: object
+    AttachmentFindAllItem:
+      description: A JSON:API document which represents a single attachment in the list
       properties:
         id:
-          description: The JSON:API resource ID (documentId of the document)
+          description: The JSON:API resource ID `attachmentId`
           type: string
         type:
-          description: The JSON:API resource type `documents`
+          description: The JSON:API resource type `attachments`
           type: string
         attributes:
-          $ref: '#/components/schemas/DocumentDetail'
-        relationships:
-          $ref: '#/components/schemas/Relationship'
+          $ref: '#/components/schemas/Attachment'
         links:
           type: array
           items:
             $ref: '#/components/schemas/SelfLink'
-        included:
-          description: The list of attachments included with the document
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+        title:
+          type: string
+        detail:
+          type: string
+    Attachment:
+      type: object
+      properties:
+        agencyNote:
+          type: string
+          description: The note by agency
+        authors:
+          type: array
+          items:
+            type: string
+          description: The individual, organization, or group of collaborators that contributed to the creation of the attachment.
+        docAbstract:
+          type: string
+          description: The detailed description of the attachment.
+        docOrder:
+          type: integer
+          description: The order of the attachment
+        fileFormats:
+          type: array
+          description: list of file formats
+          items:
+            $ref: '#/components/schemas/FileFormat'
+        modifyDate:
+          type: string
+          format: date-time
+          description: The date when the attachment was last modified.
+        publication:
+          type: string
+          description: The publication date
+        restrictReason:
+          type: string
+          description: If the attachment is restricted, this field will state the reason.
+        restrictReasonType:
+          type: string
+          description: If the attachment is restricted, this field will state the type of restriction.
+        title:
+          type: string
+          description: The formal title of the attachment
+    SelfLink:
+      description: Link to self
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/Link'
+    Link:
+      description: A string containing the link URL.
+      type: string
+      format: uri-reference
+      uniqueItems: true
+    DocumentType:
+      type: string
+      description: type of document. This field is always returned in JSON response
+      enum:
+      - Notice
+      - Rule
+      - Proposed Rule
+      - Supporting & Related Material
+      - Other
+    Relationship:
+      description: A single relationship object
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipToAttachment'
+        links:
+          $ref: '#/components/schemas/RelationshipLinks'
+      additionalProperties: false
+    RelationshipToAttachment:
+      description: An array of attachment objects as relationship resources.
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          id:
+            type: string
+    FileFormat:
+      type: object
+      properties:
+        fileUrl:
+          type: string
+          description: URL of the file on S3
+        format:
+          type: string
+          description: The format of the file such as `pdf`
+        size:
+          type: integer
+          description: The file size
+    DocumentFindAllResponse:
+      description: A JSON:API document with a list of resources
+      properties:
+        data:
+          description: The list of documents where each document is a JSON:API document
           type: array
           uniqueItems: true
           items:
-            $ref: '#/components/schemas/AttachmentFindAllItem'
+            $ref: '#/components/schemas/DocumentFindAllItem'
+        meta:
+          $ref: '#/components/schemas/FindAllResponseMetadata'
     BasicDetailModel:
       type: object
       properties:
@@ -366,18 +466,6 @@ components:
         zip:
           type: string
           description: The zip associated with the submitter's address.
-    FileFormat:
-      type: object
-      properties:
-        fileUrl:
-          type: string
-          description: URL of the file on S3
-        format:
-          type: string
-          description: The format of the file such as `pdf`
-        size:
-          type: integer
-          description: The file size
     FindAllResponseMetadata:
       description: Pagination metadata for list responses
       properties:
@@ -399,53 +487,6 @@ components:
           type: boolean
         lastPage:
           type: boolean
-    Relationship:
-      description: A single relationship object
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipToAttachment'
-        links:
-          $ref: '#/components/schemas/RelationshipLinks'
-      additionalProperties: false
-    Attachment:
-      type: object
-      properties:
-        agencyNote:
-          type: string
-          description: The note by agency
-        authors:
-          type: array
-          items:
-            type: string
-          description: The individual, organization, or group of collaborators that contributed to the creation of the attachment.
-        docAbstract:
-          type: string
-          description: The detailed description of the attachment.
-        docOrder:
-          type: integer
-          description: The order of the attachment
-        fileFormats:
-          type: array
-          description: list of file formats
-          items:
-            $ref: '#/components/schemas/FileFormat'
-        modifyDate:
-          type: string
-          format: date-time
-          description: The date when the attachment was last modified.
-        publication:
-          type: string
-          description: The publication date
-        restrictReason:
-          type: string
-          description: If the attachment is restricted, this field will state the reason.
-        restrictReasonType:
-          type: string
-          description: If the attachment is restricted, this field will state the type of restriction.
-        title:
-          type: string
-          description: The formal title of the attachment
     DocumentFindAllItem:
       description: A JSON:API document which represents a single document in the list
       properties:
@@ -461,12 +502,70 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SelfLink'
-    SelfLink:
-      description: Link to self
+    Document:
+      type: object
+      properties:
+        agencyId:
+          type: string
+          description: The acronym used to abbreviate the name of the agency associated with the document.
+        commentEndDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that closes the period when public comments may be submitted on the document.
+        commentStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: The date that begins the period when public comments may be submitted on the document.
+        docketId:
+          type: string
+          description: The ID of the docket to which the document corresponds.
+        documentType:
+          $ref: '#/components/schemas/DocumentType'
+        frDocNum:
+          type: string
+          description: The federal register document number of the document.
+        highlightedContent:
+          type:
+          - string
+          - 'null'
+          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          description: The date document was last modified in the system.
+        objectId:
+          type: string
+          description: The internal ID of the document in our system.
+        openForComment:
+          type: boolean
+          description: Conveys if the document is open for comment
+        postedDate:
+          type: string
+          description: The date that the document was posted by the agency to the system.
+        subtype:
+          type:
+          - string
+          - 'null'
+          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
+        title:
+          type: string
+          description: The formal title of the document.
+        withdrawn:
+          type: boolean
+          description: Conveys if the document is withdrawn
+    RelationshipLinks:
+      description: Relationship links to other related resources (`attachments`)
       type: object
       properties:
         self:
           $ref: '#/components/schemas/Link'
+        related:
+          $ref: '#/components/schemas/Link'
+      additionalProperties: false
     JSONError:
       description: A JSON:API error document
       type: object
@@ -476,20 +575,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Error'
-    Link:
-      description: A string containing the link URL.
-      type: string
-      format: uri-reference
-      uniqueItems: true
-    Error:
+    DocumentFindOneResponse:
+      description: A JSON:API document which represents a single document
       type: object
       properties:
-        status:
-          type: integer
-        title:
+        id:
+          description: The JSON:API resource ID (documentId of the document)
           type: string
-        detail:
+        type:
+          description: The JSON:API resource type `documents`
           type: string
+        attributes:
+          $ref: '#/components/schemas/DocumentDetail'
+        relationships:
+          $ref: '#/components/schemas/Relationship'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelfLink'
+        included:
+          description: The list of attachments included with the document
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/AttachmentFindAllItem'
     DocumentDetail:
       allOf:
       - $ref: '#/components/schemas/BasicDetailModel'
@@ -615,115 +724,6 @@ components:
             items:
               type: string
             description: The principal topics to which the document pertains.
-    RelationshipLinks:
-      description: Relationship links to other related resources (`attachments`)
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/Link'
-        related:
-          $ref: '#/components/schemas/Link'
-      additionalProperties: false
-    AttachmentFindAllItem:
-      description: A JSON:API document which represents a single attachment in the list
-      properties:
-        id:
-          description: The JSON:API resource ID `attachmentId`
-          type: string
-        type:
-          description: The JSON:API resource type `attachments`
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Attachment'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/SelfLink'
-    RelationshipToAttachment:
-      description: An array of attachment objects as relationship resources.
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            type: string
-          id:
-            type: string
-    DocumentType:
-      type: string
-      description: type of document. This field is always returned in JSON response
-      enum:
-      - Notice
-      - Rule
-      - Proposed Rule
-      - Supporting & Related Material
-      - Other
-    Document:
-      type: object
-      properties:
-        agencyId:
-          type: string
-          description: The acronym used to abbreviate the name of the agency associated with the document.
-        commentEndDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date that closes the period when public comments may be submitted on the document.
-        commentStartDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: The date that begins the period when public comments may be submitted on the document.
-        docketId:
-          type: string
-          description: The ID of the docket to which the document corresponds.
-        documentType:
-          $ref: '#/components/schemas/DocumentType'
-        frDocNum:
-          type: string
-          description: The federal register document number of the document.
-        highlightedContent:
-          type:
-          - string
-          - 'null'
-          description: Content highlighted by search engine for the searchTerm. Only returned for searches with searchTerm.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: The date document was last modified in the system.
-        objectId:
-          type: string
-          description: The internal ID of the document in our system.
-        openForComment:
-          type: boolean
-          description: Conveys if the document is open for comment
-        postedDate:
-          type: string
-          description: The date that the document was posted by the agency to the system.
-        subtype:
-          type:
-          - string
-          - 'null'
-          description: An agency-specific attribute to further categorize a document beyond the type (`documentType`).
-        title:
-          type: string
-          description: The formal title of the document.
-        withdrawn:
-          type: boolean
-          description: Conveys if the document is withdrawn
-    DocumentFindAllResponse:
-      description: A JSON:API document with a list of resources
-      properties:
-        data:
-          description: The list of documents where each document is a JSON:API document
-          type: array
-          uniqueItems: true
-          items:
-            $ref: '#/components/schemas/DocumentFindAllItem'
-        meta:
-          $ref: '#/components/schemas/FindAllResponseMetadata'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
