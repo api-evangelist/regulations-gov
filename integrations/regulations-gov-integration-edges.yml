@@ -1,0 +1,50 @@
+edges:
+- partner_name: api.data.gov
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://api.data.gov/
+  category: federal API program participation (shared API gateway)
+  contract_reference:
+    register: api.data.gov agency users (github.com/GSA/api.data.gov content/users.csv @ae4c262690; agency list
+      on api.data.gov)
+    standard: api.data.gov (GSA TTS federal API management service)
+    spec_file: null
+    role: api-data-gov-agency
+    registered_name: Regulations.gov
+    register_id: regulations.gov
+    matched_domain: regulations.gov
+    matched_by: domain
+    hosts:
+    - regulations.gov
+    signal_note: 'participation only: the agency serves APIs through the shared federal API gateway (api.data.gov
+      keys, rate limits, analytics). Hosts are context, never counted'
+    detected_by: sweep-us-federal-api-programs.py
+    detected: '2026-10-21'
+  detected_by: sweep-us-federal-api-programs.py
+  first_seen: '2026-10-21'
+generated: '2026-10-21'
+method: searched
+source:
+- https://api.data.gov/
+- https://github.com/GSA/api.data.gov/blob/main/content/users.csv
+- https://login.gov/partners/
+- https://github.com/GSA-TTS/identity-site
+- https://marketplace.fedramp.gov/products/
+- https://www.gsaelibrary.gsa.gov/ElibMain/home.do
+- https://api.data.gov/docs/
+- https://partners.login.gov/
+- https://marketplace.fedramp.gov/
+checked:
+- https://api.data.gov/
+- https://api.data.gov/docs/
+- https://github.com/GSA-TTS/identity-site
+- https://github.com/GSA/api.data.gov/blob/main/content/users.csv
+- https://login.gov/partners/
+- https://marketplace.fedramp.gov/
+- https://marketplace.fedramp.gov/products/
+- https://partners.login.gov/
+- https://www.gsaelibrary.gsa.gov/ElibMain/home.do
