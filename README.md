@@ -64,44 +64,159 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Regulations.gov is the US federal government's central portal for public participation in the rulemaking process, operated by the General Services Administration (GSA). Its REST API enables programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies.
+Regulations.gov is the US federal government's central portal for public participation in the rulemaking process, operated by the General Services Administration. Its REST API enables programmatic access to regulatory dockets, proposed rules, final rules, supporting documents, and public comments submitted to federal agencies. Developers can search and filter content across all federal agencies, retrieve full document and comment details with attachments, and submit public comments programmatically. The API is managed through api.data.gov and uses API key authentication.
 
-## API
+**Areas:** Government · Federal Rulemaking · Public Comments · Regulatory · Dockets · GSA · Open Data · Government Data
 
-- **Base URL**: https://api.regulations.gov
-- **Version**: v4
-- **Authentication**: API key via `X-Api-Key` HTTP header
-- **Key Registration**: https://api.data.gov/signup/
-- **Documentation**: https://open.gsa.gov/api/regulationsgov/
-- **OpenAPI Spec**: https://api.regulations.gov/v4/openapi.yaml
+## Regulations.gov on APIs.io
 
-## Endpoints
+Everything profiled for Regulations.gov is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/regulations-gov/](https://apis.io/providers/regulations-gov/)** — or go straight to one of the APIs or properties below.
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | /v4/documents | Search documents with full-text and filtering |
-| GET | /v4/documents/{documentId} | Get single document details |
-| GET | /v4/comments | Search comments with full-text and filtering |
-| GET | /v4/comments/{commentId} | Get single comment details |
-| GET | /v4/dockets | Search dockets by criteria |
-| GET | /v4/dockets/{docketId} | Get single docket details |
+### APIs (4)
 
-## Rate Limits
+- [Regulations.gov comment submission utilities API](https://apis.io/apis/regulations-gov/regulations-gov-comment-submission-utilities-api/) — Utilities to support submitting public comments
+- [Regulations.gov Comments API](https://apis.io/apis/regulations-gov/regulations-gov-comments-api/) — Public comments submitted on regulatory documents
+- [Regulations.gov Dockets API](https://apis.io/apis/regulations-gov/regulations-gov-dockets-api/) — Regulatory dockets grouping related documents
+- [Regulations.gov Documents API](https://apis.io/apis/regulations-gov/regulations-gov-documents-api/) — Federal regulatory documents including notices, rules, and proposed rules
 
-| Key Type | Limit |
-|----------|-------|
-| DEMO_KEY | 30 requests/hour, 50 requests/day (per IP) |
-| Registered Key | 1,000 requests/hour |
-| Commenting API | 50 requests/minute, 500 requests/hour |
+### Published properties
 
-## Resources
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- [Plans & Pricing](plans/regulations-gov-plans-pricing.yml)
-- [Rate Limits](rate-limits/regulations-gov-rate-limits.yml)
-- [FinOps](finops/regulations-gov-finops.yml)
-- [APIs.json](apis.yml)
+#### Agentic access (1)
 
-## Contact
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Support: https://www.regulations.gov/support
-- Email: eRulemaking@gsa.gov
+- [Regulations Gov Agentic Access](https://apis.io/agentic-access/regulations-gov/regulations-gov-agentic-access/)
+
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [Comment](https://apis.io/schemas/regulations-gov/comment/)
+- [Docket](https://apis.io/schemas/regulations-gov/docket/)
+- [Document](https://apis.io/schemas/regulations-gov/document/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Regulations Gov Context](https://apis.io/jsonld/regulations-gov/regulations-gov-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Regulations.gov API Vocabulary](https://apis.io/vocabularies/regulations-gov/regulations-gov-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Comment List Response](https://apis.io/examples/regulations-gov/comment-list-response/)
+- [Comment Submission Request](https://apis.io/examples/regulations-gov/comment-submission-request/)
+- [Docket Detail Response](https://apis.io/examples/regulations-gov/docket-detail-response/)
+- [Document List Response](https://apis.io/examples/regulations-gov/document-list-response/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Regulations.gov comment submission utilities API](https://apis.io/collections/regulations-gov/open-regulations-gov-comment-submission-utilities-api/)
+- [Regulations.gov comment submission utilities comments API](https://apis.io/collections/regulations-gov/open-regulations-gov-comments-api/)
+- [Regulations.gov comment submission utilities dockets API](https://apis.io/collections/regulations-gov/open-regulations-gov-dockets-api/)
+- [Regulations.gov comment submission utilities documents API](https://apis.io/collections/regulations-gov/open-regulations-gov-documents-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Regulations.gov — jsonschema rules](https://apis.io/rules/regulations-gov/regulations-gov-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Regulations Gov Authentication](https://apis.io/security/regulations-gov/regulations-gov-authentication/)
+- [Regulations Gov Domain Security](https://apis.io/security/regulations-gov/regulations-gov-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Regulations Gov Plans Pricing](https://apis.io/plans/regulations-gov/regulations-gov-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Regulations Gov Rate Limits](https://apis.io/rate-limits/regulations-gov/regulations-gov-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Regulations Gov Finops](https://apis.io/finops/regulations-gov/regulations-gov-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.regulations.gov/)
+- [Documentation](https://open.gsa.gov/api/regulationsgov/)
+- [Pricing](https://api.data.gov/docs/rate-limits/)
+- [Support](https://www.regulations.gov/support)
+- [Blog](https://www.gsa.gov/blog)
+
+## API Evangelist rating
+
+**Kin Score 31.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 59.7 |
+| Contract governance | 9.8 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 10.5 |
+
+**Agent readiness 30.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/regulations-gov/](https://apis.io/providers/regulations-gov/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Regulations.gov: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/regulations-gov/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
